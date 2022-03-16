@@ -2,6 +2,8 @@ package com.dm.study.cloud.controller;
 
 import com.dm.study.cloud.feign.GoodsFeignService;
 import com.dm.study.cloud.vo.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +27,7 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     @Autowired
     RestTemplate restTemplate;
     @Autowired
@@ -39,6 +42,7 @@ public class UserController {
 
     @GetMapping("/getUserByFeign/{id}")
     public Result getUser2(@PathVariable String id) {
+        logger.info("进入到getUser方法");
         Result goodsResult = goodsFeignService.getGoods(id);
         assert goodsResult != null;
         return Result.success("user id:" + id + ";" + goodsResult.getMsg());
