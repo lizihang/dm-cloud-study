@@ -1,5 +1,6 @@
 package com.dm.study.cloud.controller;
 
+import com.dm.study.cloud.vo.Result;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/goods")
 public class GoodsController {
     @GetMapping("/getGoods/{id}")
-    public String getGoods(@PathVariable String id) {
-        return "goods id:" + id;
+    public Result getGoods(@PathVariable String id) {
+        return Result.success("goods id:" + id);
     }
 }

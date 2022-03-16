@@ -1,5 +1,7 @@
 package com.dm.study.cloud.controller;
 
+import com.dm.study.cloud.feign.GoodsFeignService;
+import com.dm.study.cloud.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,10 +27,20 @@ import org.springframework.web.client.RestTemplate;
 public class UserController {
     @Autowired
     RestTemplate restTemplate;
+    @Autowired
+    GoodsFeignService goodsFeignService;
 
     @GetMapping("/getUser/{id}")
-    public String getUser(@PathVariable String id) {
-        String goodsReturn = restTemplate.getForObject("http://dm-goods/goods/getGoods/" + id, String.class);
-        return "user id:" + id + "\r\n" + goodsReturn;
+    public Result getUser(@PathVariable String id) {
+        Result goodsResult = restTemplate.getForObject("http://dm-goods/goods/getGoods/" + id, Result.class);
+        assert goodsResult != null;
+        return Result.success("user id:" + id + ";" + goodsResult.getMsg());
+    }
+
+    @GetMapping("/getUserByFeign/{id}")
+    public Result getUser2(@PathVariable String id) {
+        Result goodsResult = goodsFeignService.getGoods(id);
+        assert goodsResult != null;
+        return Result.success("user id:" + id + ";" + goodsResult.getMsg());
     }
 }
