@@ -119,10 +119,10 @@
         </dependency>
 
         <!-- lombok -->
-        <!--<dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-        </dependency>-->
+        </dependency>
 
         <!-- 测试依赖 -->
         <dependency>
