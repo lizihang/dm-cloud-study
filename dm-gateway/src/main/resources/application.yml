@@ -1,16 +1,15 @@
 spring:
   cloud:
-    nacos:
-      server-addr: 127.0.0.1:8848
     gateway:
       discovery:
         locator:
-          enabled: true
+          enabled: false
           lower-case-service-id: true
       routes:
         - id: dm-user
           uri: lb://dm-user
           predicates:
             - Path=/dm-user/**
-          #filters:
-          #  - StripPrefix=1
+          filters:
+            - StripPrefix=1
+            - RequestPath=test,path
