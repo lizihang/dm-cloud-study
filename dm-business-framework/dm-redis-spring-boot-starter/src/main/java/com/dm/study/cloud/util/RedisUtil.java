@@ -46,5 +46,4 @@ public class RedisUtil {
         RBucket<T> bucket = client.getBucket(key);
         return bucket.get();
     }
-
 }

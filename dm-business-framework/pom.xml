@@ -15,5 +15,6 @@
 
     <modules>
         <module>dm-redis-spring-boot-starter</module>
+        <module>dm-mybatis-spring-boot-starter</module>
     </modules>
 </project>
