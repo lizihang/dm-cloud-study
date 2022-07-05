@@ -1,6 +1,7 @@
 package com.dm.study.cloud.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.dm.study.cloud.param.DmUserQueryParams;
 import com.dm.study.cloud.po.DmUser;
 import org.springframework.beans.factory.BeanNameAware;
@@ -19,7 +20,7 @@ import org.springframework.beans.factory.NamedBean;
  * <p>类全名：com.dm.study.cloud.service.UserService</p>
  * 查看帮助：<a href="" target="_blank"></a>
  */
-public interface UserService extends BeanNameAware, NamedBean {
+public interface UserService extends BeanNameAware, NamedBean, IService<DmUser> {
     /**
      * 查询用户分页数据
      * @return 用户列表

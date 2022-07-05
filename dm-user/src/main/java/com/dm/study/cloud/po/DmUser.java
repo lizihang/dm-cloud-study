@@ -1,7 +1,9 @@
 package com.dm.study.cloud.po;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
@@ -28,7 +30,6 @@ import lombok.*;
 @TableName("dm_user")
 public class DmUser extends BasePO {
     private static final long serialVersionUID = -8073239705877216992L;
-
     /**
      * id
      */
@@ -59,7 +60,7 @@ public class DmUser extends BasePO {
     /**
      * 性别
      */
-    private int gender;
+    private Integer gender;
     /**
      * 头像
      */
@@ -67,6 +68,9 @@ public class DmUser extends BasePO {
     /**
      * 状态
      */
-    @TableField(fill = FieldFill.INSERT)
     private String status;
+    /**
+     * 身份证
+     */
+    private String identity;
 }

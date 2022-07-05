@@ -39,7 +39,6 @@ public class UserController {
     RestTemplate restTemplate;
     @Autowired
     GoodsFeignService goodsFeignService;
-
     @Autowired
     RedissonClient client;
 
@@ -56,14 +55,15 @@ public class UserController {
 
     @GetMapping("/getUser/{id}")
     public Result getUser(@PathVariable String id) {
+        logger.info("进入到getUser方法");
         Result goodsResult = restTemplate.getForObject("http://dm-goods/goods/getGoods/" + id, Result.class);
         assert goodsResult != null;
         return Result.success("user id:" + id + ";" + goodsResult.getMsg());
     }
 
     @GetMapping("/getUserByFeign/{id}")
-    public Result getUser2(@PathVariable String id) {
-        logger.info("进入到getUser方法");
+    public Result getUserByFeign(@PathVariable String id) {
+        logger.info("进入到getUserByFeign方法");
         Result goodsResult = goodsFeignService.getGoods(id);
         assert goodsResult != null;
         return Result.success("user id:" + id + ";" + goodsResult.getMsg());

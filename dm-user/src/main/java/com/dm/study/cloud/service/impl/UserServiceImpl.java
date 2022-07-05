@@ -2,6 +2,7 @@ package com.dm.study.cloud.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dm.study.cloud.dao.UserMapper;
 import com.dm.study.cloud.param.DmUserQueryParams;
 import com.dm.study.cloud.po.DmUser;
@@ -25,7 +26,7 @@ import javax.annotation.Resource;
  * 查看帮助：<a href="" target="_blank"></a>
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper,DmUser> implements UserService {
 
     private String beanName;
     @Resource

@@ -1,6 +1,7 @@
 package com.dm.study.cloud.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.dm.study.cloud.util.RequestUtil;
 import org.apache.ibatis.reflection.MetaObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 /**
- * <p>标题：</p>
+ * <p>标题：mybatis自动插入公共字段</p>
  * <p>功能：</p>
  * <pre>
  * 其他说明：
@@ -26,27 +27,37 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     private static final Logger logger = LoggerFactory.getLogger(MyMetaObjectHandler.class);
 
     @Override
+    public boolean openInsertFill() {
+        // 可通过系统配置动态控制
+        return true;
+    }
+
+    @Override
+    public boolean openUpdateFill() {
+        // 可通过系统配置动态控制
+        return true;
+    }
+
+    @Override
     public void insertFill(MetaObject metaObject) {
         // 对象中不存在的字段，不会处理，也不会报错
         logger.info("start insert fill ....");
+        // TODO 网关校验token后，将token对应的userId放到请求头参数中。此处获取
+        String userId = RequestUtil.getRequestHead("user-id");
         Date date = new Date();
-        // TODO 获取当前登录人
-        // String usernameFromToken = jwtTokenUtil.getUsernameFromToken(ServletUtil.getRequest());
-        String usernameFromToken = "";
-        this.strictInsertFill(metaObject, "createUser", String.class, usernameFromToken);
+        this.strictInsertFill(metaObject, "createUser", String.class, userId);
         this.strictInsertFill(metaObject, "createTime", Date.class, date);
-        this.strictInsertFill(metaObject, "modifyUser", String.class, usernameFromToken);
+        this.strictInsertFill(metaObject, "modifyUser", String.class, userId);
         this.strictInsertFill(metaObject, "modifyTime", Date.class, date);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
         logger.info("start update fill ....");
+        // TODO 网关校验token后，将token对应的userId放到请求头参数中。此处获取
+        String userId = RequestUtil.getRequestHead("user-id");
         Date date = new Date();
-        // TODO 获取当前登录人
-        // String usernameFromToken = jwtTokenUtil.getUsernameFromToken(ServletUtil.getRequest());
-        String usernameFromToken = "";
-        this.strictUpdateFill(metaObject, "modifyUser", String.class, usernameFromToken);
+        this.strictUpdateFill(metaObject, "modifyUser", String.class, userId);
         this.strictUpdateFill(metaObject, "modifyTime", Date.class, date);
     }
 }
