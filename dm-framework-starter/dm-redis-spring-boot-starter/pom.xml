@@ -5,7 +5,7 @@
 
     <parent>
         <groupId>com.dm.study.cloud</groupId>
-        <artifactId>dm-business-framework</artifactId>
+        <artifactId>dm-framework-starter</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 

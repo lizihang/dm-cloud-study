@@ -12,6 +12,7 @@
     <artifactId>dm-gateway</artifactId>
     <name>dm-gateway</name>
     <packaging>jar</packaging>
+    <description>网关</description>
 
     <dependencies>
         <!-- Gateway要移除spring-boot-starter-web依赖 -->

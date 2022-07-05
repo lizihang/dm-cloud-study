@@ -63,7 +63,6 @@ public class RedissonConfig {
 
     /**
      * 单机模式配置
-     *
      * @return
      */
     private Config getSingleServerConfig() {
@@ -86,7 +85,6 @@ public class RedissonConfig {
 
     /**
      * 主从模式
-     *
      * @return
      */
     private Config getMasterSlaveServersConfig() {
@@ -102,7 +100,6 @@ public class RedissonConfig {
 
     /**
      * 哨兵模式
-     *
      * @return
      */
     private Config getSentinelServersConfig() {
@@ -118,7 +115,6 @@ public class RedissonConfig {
 
     /**
      * 集群模式
-     *
      * @return
      */
     private Config getClusterServersConfig() {

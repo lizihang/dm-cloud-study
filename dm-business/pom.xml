@@ -9,12 +9,13 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>dm-business-framework</artifactId>
-    <name>dm-business-framework</name>
+    <artifactId>dm-business</artifactId>
+    <name>dm-business</name>
     <packaging>pom</packaging>
+    <description>业务服务</description>
 
     <modules>
-        <module>dm-redis-spring-boot-starter</module>
-        <module>dm-mybatis-spring-boot-starter</module>
+        <module>dm-exam</module>
     </modules>
 </project>
+

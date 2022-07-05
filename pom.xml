@@ -16,7 +16,9 @@
         <module>dm-user</module>
         <module>dm-goods</module>
         <module>dm-security</module>
-        <module>dm-business-framework</module>
+        <module>dm-framework-starter</module>
+        <module>dm-framework-service</module>
+        <module>dm-business</module>
     </modules>
 
     <properties>
