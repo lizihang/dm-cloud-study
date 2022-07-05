@@ -15,14 +15,14 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * <p>审核：</p>
  * <p>重构：</p>
  * <p>创建日期：2022年07月05日 18:46</p>
- * <p>类全名：com.dm.study.cloud.DmUserApplication</p>
+ * <p>类全名：com.dm.study.cloud.DmExamCoreApplication</p>
  * 查看帮助：<a href="" target="_blank"></a>
  */
 @EnableFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication
-public class DmUserApplication {
+public class DmExamCoreApplication {
     public static void main(String[] args) {
-        SpringApplication.run(DmUserApplication.class, args);
+        SpringApplication.run(DmExamCoreApplication.class, args);
     }
 }
