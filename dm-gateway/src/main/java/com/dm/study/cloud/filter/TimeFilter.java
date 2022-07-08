@@ -30,15 +30,18 @@ public class TimeFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         long start = System.currentTimeMillis();
         logger.info("start:{}", start);
-        Mono<Void> result = chain.filter(exchange);
-        long end = System.currentTimeMillis();
-        logger.info("end:{}", end);
-        logger.info("业务处理时间：{}ms", (end - start));
-        return result;
+        return chain.filter(exchange).then(Mono.fromRunnable(() -> {
+            long end = System.currentTimeMillis();
+            logger.info("end:{}", end);
+            logger.info("业务处理时间：{}ms", (end - start));
+            // ServerHttpResponse response = exchange.getResponse();
+            // HttpStatus statusCode = response.getStatusCode();
+            // logger.info("请求路径:{},远程IP地址:{},响应码:{}", path, remoteAddress, statusCode);
+        }));
     }
 
     @Override
     public int getOrder() {
-        return HIGHEST_PRECEDENCE;
+        return HIGHEST_PRECEDENCE + 1;
     }
 }

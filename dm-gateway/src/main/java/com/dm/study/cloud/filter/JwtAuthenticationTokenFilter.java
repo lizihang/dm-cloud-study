@@ -47,7 +47,7 @@ public class JwtAuthenticationTokenFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         // WebFlux异步调用，同步会报错
         Future<Result> future = executorService.submit(() -> toUserFeign.testRedis("1"));
-        Result result = null;
+        Result result;
         try {
             result = future.get();
             logger.info(result.toString());
@@ -60,7 +60,7 @@ public class JwtAuthenticationTokenFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return 0;
+        return HIGHEST_PRECEDENCE;
     }
 
 //    @Override

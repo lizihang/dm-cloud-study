@@ -1,4 +1,8 @@
 spring:
+  # 自定义redisson配置
+  redisson:
+    # 自定义的key，RedissonConfig中配置使用
+    type: single
   cloud:
     gateway:
       discovery:
