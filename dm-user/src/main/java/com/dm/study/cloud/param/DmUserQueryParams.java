@@ -1,6 +1,5 @@
 package com.dm.study.cloud.param;
 
-import com.dm.study.cloud.annotation.SensitiveData;
 import com.dm.study.cloud.annotation.SensitiveFiled;
 import com.dm.study.cloud.vo.QueryParams;
 /**
@@ -16,7 +15,7 @@ import com.dm.study.cloud.vo.QueryParams;
  * <p>类全名：com.dm.study.cloud.param.DmUserQueryParams</p>
  * 查看帮助：<a href="" target="_blank"></a>
  */
-@SensitiveData
+// @SensitiveData
 public class DmUserQueryParams extends QueryParams {
 	private static final long    serialVersionUID = 6725721872463615005L;
 	/**
