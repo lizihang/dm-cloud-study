@@ -1,8 +1,8 @@
 server:
-  port: 18001
+  port: 19001
 spring:
   application:
-    name: dm-security
+    name: dm-goods
   profiles:
     active: dev
   cloud:

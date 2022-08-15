@@ -1,6 +1,10 @@
 package com.dm.study.cloud.handler;
 
+import com.dm.study.cloud.constant.Constants;
 import com.dm.study.cloud.util.RedisUtil;
+import com.dm.study.cloud.util.ServletUtil;
+import com.dm.study.cloud.vo.LoginUser;
+import com.dm.study.cloud.vo.Result;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -32,11 +36,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         // TODO 登录成功 记录日志
-        /*
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         redisUtil.setCacheObject(Constants.LOGIN_USER_KEY + loginUser.getUsername(), loginUser);
         Result result = Result.success("登录成功", loginUser);
         ServletUtil.render(response, result);
-        */
     }
 }

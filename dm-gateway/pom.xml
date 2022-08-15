@@ -25,6 +25,10 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-web</artifactId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>dm-mybatis-spring-boot-starter</artifactId>
+                    <groupId>com.dm.study.cloud</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
 

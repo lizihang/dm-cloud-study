@@ -7,6 +7,8 @@ import com.dm.study.cloud.po.DmUser;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.NamedBean;
 
+import java.util.List;
+
 /**
  * <p>标题：</p>
  * <p>功能：</p>
@@ -32,4 +34,6 @@ public interface UserService extends BeanNameAware, NamedBean, IService<DmUser> 
      * @return 用户对象
      */
     DmUser queryUser(DmUserQueryParams params);
+
+    List<DmUser> selectUserList(DmUserQueryParams params);
 }

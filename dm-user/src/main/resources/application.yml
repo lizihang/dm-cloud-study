@@ -1,11 +1,6 @@
-spring:
-  # 自定义redisson配置
-  redisson:
-    # 自定义的key，RedissonConfig中配置使用
-    type: single
 mybatis-plus:
   mapper-locations: classpath*:com/dm/mapper/*.xml
-  type-aliases-package: com.dm
+  type-aliases-package: com.dm.**.po
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true

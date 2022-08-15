@@ -14,3 +14,5 @@ spring:
           - data-id: common.yaml
             group: DEFAULT_GROUP
             refresh: true
+          - data_id: datasource.yaml
+            group: DEFAULT_GROUP

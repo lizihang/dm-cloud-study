@@ -2,7 +2,6 @@ package com.dm.study.cloud.filter;
 
 import com.dm.study.cloud.feign.ToUserFeign;
 import com.dm.study.cloud.util.RedisUtil;
-import com.dm.study.cloud.vo.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -13,10 +12,8 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 /**
  * <p>标题：校验token</p>
@@ -46,6 +43,7 @@ public class JwtAuthenticationTokenFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         // WebFlux异步调用，同步会报错
+        /*
         Future<Result> future = executorService.submit(() -> toUserFeign.testRedis("1"));
         Result result;
         try {
@@ -55,6 +53,7 @@ public class JwtAuthenticationTokenFilter implements GlobalFilter, Ordered {
             e.printStackTrace();
         }
         logger.info("校验token全局filter");
+        */
         return chain.filter(exchange);
     }
 

@@ -37,7 +37,7 @@ public class Constants {
     /**==================== 不需要权限的 ====================*/
     public static final String[] AUTH_WHITELIST        = {
             // 登录相关
-            "/system/getCodeImg", "/user/register",
+            "/login/getCodeImg", "/user/register",
             //
             "/oauth/**",
             // swagger3相关

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dm.study.cloud.dao.SysMenuMapper">
+    <select id="selectMenuList" resultMap="menusResultMap">
+        select m.id         m_id,
+               m.name       m_name,
+               m.router     m_router,
+               m.icon_class m_icon_class,
+               m.group      m_group,
+               m.idx        m_idx,
+               m.level      m_level,
+               m.parent_id  m_parent_id,
+               g.*
+        from dm.dm_sys_menu m
+                 left join
+             dm.dm_sys_menu g
+             on
+                 m.id = g.parent_id
+        having m.level = 1
+        order by m.idx asc, g.idx asc
+    </select>
+
+    <resultMap type="sysMenu" id="menusResultMap">
+        <id column="m_id" property="id"/>
+        <result column="m_name" property="name"/>
+        <result column="m_router" property="router"/>
+        <result column="m_icon_class" property="icon_class"/>
+        <result column="m_group" property="group"/>
+        <result column="m_idx" property="idx"/>
+        <result column="m_level" property="level"/>
+        <result column="m_parent_id" property="parent_id"/>
+        <collection property="subMenus" ofType="sysMenu">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+            <result column="router" property="router"/>
+            <result column="icon_class" property="icon_class"/>
+            <result column="group" property="group"/>
+            <result column="idx" property="idx"/>
+            <result column="level" property="level"/>
+            <result column="parent_id" property="parent_id"/>
+        </collection>
+    </resultMap>
+
+</mapper>
