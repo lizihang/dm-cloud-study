@@ -3,16 +3,3 @@ server:
 spring:
   application:
     name: dm-security
-  profiles:
-    active: dev
-  cloud:
-    nacos:
-      config:
-        server-addr: 127.0.0.1:8848
-        file-extension: yaml
-        shared-configs:
-          - data-id: common.yaml
-            group: DEFAULT_GROUP
-            refresh: true
-          - data_id: datasource.yaml
-            group: DEFAULT_GROUP

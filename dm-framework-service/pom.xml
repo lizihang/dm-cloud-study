@@ -13,5 +13,9 @@
     <name>dm-framework-service</name>
     <packaging>pom</packaging>
     <description>框架基础服务</description>
+
+    <modules>
+        <module>dm-framework-elasticsearch</module>
+    </modules>
 </project>
 

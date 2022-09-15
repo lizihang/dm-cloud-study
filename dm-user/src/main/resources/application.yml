@@ -1,6 +1,0 @@
-mybatis-plus:
-  mapper-locations: classpath*:com/dm/mapper/*.xml
-  type-aliases-package: com.dm.**.po
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    map-underscore-to-camel-case: true

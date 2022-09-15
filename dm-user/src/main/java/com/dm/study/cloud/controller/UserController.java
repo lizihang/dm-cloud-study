@@ -2,6 +2,7 @@ package com.dm.study.cloud.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.dm.study.cloud.config.MyNacosProperties;
 import com.dm.study.cloud.feign.GoodsFeignService;
 import com.dm.study.cloud.param.DmUserQueryParams;
 import com.dm.study.cloud.po.DmUser;
@@ -42,6 +43,8 @@ public class UserController {
 	GoodsFeignService goodsFeignService;
 	@Autowired
 	RedissonClient    client;
+	@Autowired
+	MyNacosProperties myNacosProperties;
 
 	@GetMapping("/testRedis/{id}")
 	public Result testRedis(@PathVariable String id) {
@@ -130,5 +133,10 @@ public class UserController {
 	@PostMapping("/testPostMethod2")
 	public Result testPostMethod2(DmUserQueryParams param) {
 		return Result.success(param.toString());
+	}
+
+	@GetMapping("/testGetNacosProperties")
+	public Result testGetNacosProperties() {
+		return Result.success("查询成功！", myNacosProperties.isUseLocalCache());
 	}
 }
