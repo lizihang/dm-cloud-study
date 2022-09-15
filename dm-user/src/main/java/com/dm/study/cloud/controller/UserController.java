@@ -12,10 +12,7 @@ import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -123,5 +120,15 @@ public class UserController {
 		wrapper.like(DmUser::getUsername, "测试");
 		List<DmUser> list = userService.list(wrapper);
 		return Result.success("查询成功！", list);
+	}
+
+	@PostMapping("/testPostMethod")
+	public Result testPostMethod(@RequestBody DmUserQueryParams param) {
+		return Result.success(param.toString());
+	}
+
+	@PostMapping("/testPostMethod2")
+	public Result testPostMethod2(DmUserQueryParams param) {
+		return Result.success(param.toString());
 	}
 }
