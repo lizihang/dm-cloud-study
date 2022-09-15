@@ -1,0 +1,8 @@
+dm:
+  redisson:
+    sentinel:
+      database: 1
+      # password: null
+      sentinelAddresses:
+        - "redis://127.0.0.1:26379"
+        - "redis://127.0.0.1:26389"

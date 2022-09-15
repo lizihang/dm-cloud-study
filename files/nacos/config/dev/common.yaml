@@ -3,4 +3,6 @@ spring:
   redisson:
     # 自定义的key，RedissonConfig中配置使用
     type: single
+    build: 
+      type: code
 useLocalCache: false

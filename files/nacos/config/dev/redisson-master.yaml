@@ -1,0 +1,9 @@
+dm:
+  redisson:
+    master:
+      database: 1
+      # password: null
+      masterAddress: "redis://127.0.0.1:6379"
+      slaveAddresses:
+        - "redis://127.0.0.1:6381"
+        - "redis://127.0.0.1:6380"

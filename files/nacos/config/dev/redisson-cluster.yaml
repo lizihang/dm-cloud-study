@@ -1,0 +1,8 @@
+dm:
+  redisson:
+    cluster:
+      # password: null
+      nodeAddresses:
+        - "redis://127.0.0.1:7004"
+        - "redis://127.0.0.1:7001"
+        - "redis://127.0.0.1:7000"
