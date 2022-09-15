@@ -8,7 +8,7 @@ spring:
     # driver-class-name: com.mysql.jdbc.Driver
     # 使用druid-spring-boot-starter可以用下边的配置方式，spring.datasource.druid.xxx
     druid:
-      url: jdbc:mysql://127.0.0.1:3306/dm?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false
+      url: jdbc:mysql://127.0.0.1:3306/${spring.application.name}?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false
       username: root
       password: root
       driver-class-name: com.mysql.jdbc.Driver
