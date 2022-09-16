@@ -12,7 +12,6 @@ import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -37,29 +36,11 @@ public class TestController {
 	@Resource
 	SysUserService    userService;
 	@Resource
-	RestTemplate      restTemplate;
-	@Resource
 	RedissonClient    client;
 	@Resource
 	GoodsFeignService goodsFeignService;
 	@Resource
 	MyNacosProperties myNacosProperties;
-
-	@GetMapping("/getUser/{id}")
-	public Result getUser(@PathVariable String id) {
-		logger.info("进入到getUser方法");
-		Result goodsResult = restTemplate.getForObject("http://dm-goods/goods/getGoods/" + id, Result.class);
-		assert goodsResult != null;
-		return Result.success("user id:" + id + ";" + goodsResult.getMsg());
-	}
-
-	@GetMapping("/getUserByFeign/{id}")
-	public Result getUserByFeign(@PathVariable String id) {
-		logger.info("进入到getUserByFeign方法");
-		Result goodsResult = goodsFeignService.getGoods(id);
-		assert goodsResult != null;
-		return Result.success("user id:" + id + ";" + goodsResult.getMsg());
-	}
 
 	@GetMapping("/testMyBatisInterceptor/{id}")
 	public Result testMyBatisInterceptor(@PathVariable String id) {
