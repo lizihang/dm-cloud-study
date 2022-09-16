@@ -1,6 +1,6 @@
 package com.dm.study.cloud.vo;
 
-import com.dm.study.cloud.po.DmUser;
+import com.dm.study.cloud.po.SysUser;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,7 +27,7 @@ public class LoginUser implements UserDetails, CredentialsContainer {
 	/**
 	 * 用户信息
 	 */
-	private              DmUser                 user;
+	private              SysUser                user;
 	/**
 	 * 用户唯一标识
 	 */
@@ -68,15 +68,15 @@ public class LoginUser implements UserDetails, CredentialsContainer {
 	public LoginUser() {
 	}
 
-	public LoginUser(DmUser user) {
+	public LoginUser(SysUser user) {
 		this.user = user;
 	}
 
-	public DmUser getUser() {
+	public SysUser getUser() {
 		return user;
 	}
 
-	public void setUser(DmUser user) {
+	public void setUser(SysUser user) {
 		this.user = user;
 	}
 

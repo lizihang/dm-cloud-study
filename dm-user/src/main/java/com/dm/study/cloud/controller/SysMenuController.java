@@ -4,11 +4,11 @@ import com.dm.study.cloud.annotation.DmLog;
 import com.dm.study.cloud.param.SysMenuQueryParams;
 import com.dm.study.cloud.service.SysMenuService;
 import com.dm.study.cloud.vo.Result;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 /**
  * <p>标题：</p>
  * <p>功能：</p>
@@ -22,11 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>类全名：com.dm.study.cloud.controller.SysMenuController</p>
  * 查看帮助：<a href="" target="_blank"></a>
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/menu")
 public class SysMenuController {
-	@Autowired
+	@Resource
 	SysMenuService menuService;
 
 	/**

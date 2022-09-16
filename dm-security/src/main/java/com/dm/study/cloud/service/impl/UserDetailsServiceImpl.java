@@ -1,6 +1,6 @@
 package com.dm.study.cloud.service.impl;
 
-import com.dm.study.cloud.po.DmUser;
+import com.dm.study.cloud.po.SysUser;
 import com.dm.study.cloud.vo.LoginUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // TODO
-        DmUser user = new DmUser();
+        SysUser user = new SysUser();
         user.setUsername("admin");
         user.setPassword(new BCryptPasswordEncoder().encode("123456"));
         if (user == null) {
@@ -44,7 +44,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return createLoginUser(user);
     }
 
-    public UserDetails createLoginUser(DmUser user) {
+    public UserDetails createLoginUser(SysUser user) {
         //TODO 转换对象
         logger.info("[用户登录]-将DmUser转换成LoginUser");
         LoginUser loginUser = new LoginUser(user);

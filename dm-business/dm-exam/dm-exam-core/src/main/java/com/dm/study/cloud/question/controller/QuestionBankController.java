@@ -3,10 +3,10 @@ package com.dm.study.cloud.question.controller;
 import com.dm.study.cloud.question.param.QuestionBankParam;
 import com.dm.study.cloud.question.service.QuestionBankService;
 import com.dm.study.cloud.vo.Result;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 /**
  * <p>标题：题库管理controller</p>
  * <p>功能：</p>
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/exam/questionBank")
 public class QuestionBankController {
-    @Autowired
+    @Resource
     QuestionBankService service;
 
     @RequestMapping("/queryQuestionBank")

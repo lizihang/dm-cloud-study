@@ -1,10 +1,10 @@
 package com.dm.study.cloud.feign;
 
+import com.dm.study.cloud.constant.ServiceNameConstant;
 import com.dm.study.cloud.vo.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
 /**
  * <p>标题：</p>
  * <p>功能：</p>
@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.PathVariable;
  * <p>类全名：com.dm.study.cloud.feign.GoodsFeignService</p>
  * 查看帮助：<a href="" target="_blank"></a>
  */
-@FeignClient(name = "dm-goods")
+@FeignClient(name = ServiceNameConstant.DM_GOODS)
 public interface GoodsFeignService {
-    @GetMapping("/goods/getGoods/{id}")
-    Result getGoods(@PathVariable("id") String id);
+	@GetMapping("/goods/getGoods/{id}")
+	Result getGoods(@PathVariable("id") String id);
 }

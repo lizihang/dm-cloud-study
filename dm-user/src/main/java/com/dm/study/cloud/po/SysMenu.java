@@ -1,6 +1,7 @@
 package com.dm.study.cloud.po;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +21,7 @@ import java.util.List;
  */
 @Getter
 @Setter
+@TableName("sys_menu")
 public class SysMenu extends BasePO {
 	private static final long          serialVersionUID = 7497267136149976058L;
 	/**
@@ -59,4 +61,9 @@ public class SysMenu extends BasePO {
 	 * 子菜单
 	 */
 	private              List<SysMenu> subMenus;
+
+	@Override
+	public String toString() {
+		return "SysMenu{" + "id=" + id + ", name='" + name + '\'' + ", router='" + router + '\'' + ", icon_class='" + icon_class + '\'' + ", group='" + group + '\'' + ", idx=" + idx + ", level=" + level + ", parent_id=" + parent_id + ", subMenus=" + subMenus + "} " + super.toString();
+	}
 }

@@ -1,10 +1,10 @@
 package com.dm.study.cloud.exam.common.runner;
 
 import org.redisson.api.RedissonClient;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 /**
  * <p>标题：试题管理初始化</p>
  * <p>功能：</p>
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class QuestionInit implements CommandLineRunner {
-    @Autowired
+    @Resource
     RedissonClient client;
 
     @Override

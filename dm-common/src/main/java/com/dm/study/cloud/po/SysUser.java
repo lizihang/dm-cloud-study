@@ -5,7 +5,8 @@ import com.baomidou.mybatisplus.annotation.*;
 import com.dm.study.cloud.annotation.SensitiveFiled;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 /**
  * <p>标题：</p>
  * <p>功能：</p>
@@ -20,36 +21,56 @@ import lombok.*;
  * 查看帮助：<a href="" target="_blank"></a>
  */
 // @SensitiveData
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 @JsonInclude // 字段值为null时也序列化，加在类上所有字段生效，也可以单独加字段上
-@TableName("dm_user")
-public class DmUser extends BasePO {
+@TableName("sys_user")
+public class SysUser extends BasePO {
 	private static final long    serialVersionUID = -8073239705877216992L;
-	/** id */
+	/**
+	 * id
+	 */
 	@TableId(type = IdType.AUTO)
 	private              Integer id;
-	/** 用户名 */
+	/**
+	 * 用户名
+	 */
 	private              String  username;
-	/** 密码 */
+	/**
+	 * 密码
+	 */
 	@JSONField(serialize = false)
 	@JsonIgnore // Redisson配置了JsonJacksonCodec序列化方式，序列化时使用此注解忽略该字段
 	private              String  password;
-	/** 昵称 */
+	/**
+	 * 昵称
+	 */
 	private              String  nickname;
-	/** 邮箱 */
+	/**
+	 * 邮箱
+	 */
 	@SensitiveFiled
 	private              String  email;
-	/** 手机号 */
+	/**
+	 * 手机号
+	 */
 	private              String  phone;
-	/** 性别 */
+	/**
+	 * 性别
+	 */
 	private              Integer gender;
-	/** 头像 */
+	/**
+	 * 头像
+	 */
 	private              String  avatar;
-	/** 状态 */
+	/**
+	 * 状态
+	 */
 	@TableField(fill = FieldFill.INSERT)
 	private              String  status;
+
+	@Override
+	public String toString() {
+		return "SysUser{" + "id=" + id + ", username='" + username + '\'' + ", password='" + password + '\'' + ", nickname='" + nickname + '\'' + ", email='" + email + '\'' + ", phone='" + phone + '\'' + ", gender=" + gender + ", avatar='" + avatar + '\'' + ", status='" + status + '\'' + "} " + super.toString();
+	}
 }

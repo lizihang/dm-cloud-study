@@ -2,6 +2,8 @@ package com.dm.study.cloud.param;
 
 import com.dm.study.cloud.annotation.SensitiveFiled;
 import com.dm.study.cloud.vo.QueryParams;
+import lombok.Getter;
+import lombok.Setter;
 /**
  * <p>标题：</p>
  * <p>功能：</p>
@@ -16,6 +18,8 @@ import com.dm.study.cloud.vo.QueryParams;
  * 查看帮助：<a href="" target="_blank"></a>
  */
 // @SensitiveData
+@Getter
+@Setter
 public class DmUserQueryParams extends QueryParams {
 	private static final long    serialVersionUID = 6725721872463615005L;
 	/**
@@ -39,46 +43,6 @@ public class DmUserQueryParams extends QueryParams {
 	 * 状态
 	 */
 	private              Integer status;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public Integer getStatus() {
-		return status;
-	}
-
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
 
 	@Override
 	public String toString() {
