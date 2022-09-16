@@ -14,7 +14,6 @@
         <module>dm-common</module>
         <module>dm-gateway</module>
         <module>dm-user</module>
-        <module>dm-goods</module>
         <module>dm-security</module>
         <module>dm-framework-starter</module>
         <module>dm-framework-service</module>
