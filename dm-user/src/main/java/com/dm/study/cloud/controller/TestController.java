@@ -48,7 +48,7 @@ public class TestController {
 		user.setUsername("测试拦截器");
 		user.setNickname("test" + id);
 		user.setPassword("12345");
-		user.setStatus("10");
+		user.setStatus(1);
 		user.setEmail("testUser@163.com");
 		user.setGender(1);
 		userService.save(user);

@@ -1,7 +1,9 @@
 package com.dm.study.cloud.po;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.dm.study.cloud.annotation.SensitiveFiled;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -66,8 +68,7 @@ public class SysUser extends BasePO {
 	/**
 	 * 状态
 	 */
-	@TableField(fill = FieldFill.INSERT)
-	private              String  status;
+	private              Integer status;
 
 	@Override
 	public String toString() {

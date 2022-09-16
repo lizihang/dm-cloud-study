@@ -19,11 +19,11 @@ public class QueryParams implements Serializable {
 	/**
 	 * 分页查询，查询页码
 	 */
-	private              int    pageNum;
+	private              int    pageNum          = 1;
 	/**
 	 * 分页查询，每页数量
 	 */
-	private              int    pageSize;
+	private              int    pageSize         = 10;
 	/**
 	 * 排序字段
 	 */

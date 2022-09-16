@@ -1,5 +1,6 @@
 package com.dm.study.cloud.controller;
 
+import com.dm.study.cloud.annotation.DmLog;
 import com.dm.study.cloud.param.DmUserQueryParams;
 import com.dm.study.cloud.service.SysUserService;
 import com.dm.study.cloud.vo.Result;
@@ -32,6 +33,7 @@ public class SysUserController {
 	 * @param params 参数
 	 * @return 用户分页数据
 	 */
+	@DmLog
 	@PostMapping("/queryUserPage")
 	public Result queryUserPage(DmUserQueryParams params) {
 		return Result.success("查询成功！", userService.queryUserPage(params));
@@ -42,6 +44,7 @@ public class SysUserController {
 	 * @param params 参数
 	 * @return 用户列表数据
 	 */
+	@DmLog
 	@PostMapping("/queryUserList")
 	public Result queryUserList(DmUserQueryParams params) {
 		return Result.success("查询成功！", userService.queryUserList(params));
@@ -52,6 +55,7 @@ public class SysUserController {
 	 * @param params 参数
 	 * @return 用户信息
 	 */
+	@DmLog
 	@PostMapping("/queryUserInfo")
 	public Result queryUserInfo(DmUserQueryParams params) {
 		return Result.success("查询成功！", userService.queryUserInfo(params));
