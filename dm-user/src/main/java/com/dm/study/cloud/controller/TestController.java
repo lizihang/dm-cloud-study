@@ -3,19 +3,21 @@ package com.dm.study.cloud.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dm.study.cloud.config.MyNacosProperties;
+import com.dm.study.cloud.exception.DmException;
 import com.dm.study.cloud.feign.GoodsFeignService;
 import com.dm.study.cloud.param.DmUserQueryParams;
 import com.dm.study.cloud.po.SysUser;
+import com.dm.study.cloud.po.TestGroupingBy;
 import com.dm.study.cloud.service.SysUserService;
 import com.dm.study.cloud.vo.Result;
 import org.redisson.api.RedissonClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 /**
  * <p>标题：测试用controller</p>
  * <p>功能：</p>
@@ -32,7 +34,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class TestController {
-	private static final Logger logger = LoggerFactory.getLogger(TestController.class);
 	@Resource
 	SysUserService    userService;
 	@Resource
@@ -106,5 +107,32 @@ public class TestController {
 	@GetMapping("/testGetNacosProperties")
 	public Result testGetNacosProperties() {
 		return Result.success("查询成功！", myNacosProperties.isUseLocalCache());
+	}
+
+	@GetMapping("/testGroupingBy")
+	public Result testGroupingBy() {
+		List<SysUser> userList = new ArrayList<>();
+		for (int i = 0; i < 10; i++) {
+			SysUser user = new SysUser();
+			user.setUsername("username" + i);
+			user.setStatus(i % 3);
+			userList.add(user);
+		}
+		Map<Integer,List<SysUser>> collect = userList.stream().collect(Collectors.groupingBy(SysUser::getStatus));
+		TestGroupingBy test = new TestGroupingBy();
+		test.setUserList1(collect.get(0));
+		test.setUserList2(collect.get(1));
+		test.setUserList3(collect.get(2));
+		test.setAllList(userList);
+		return Result.success("ok", test);
+	}
+
+	/**
+	 * 测试全局异常处理
+	 * @return
+	 */
+	@GetMapping("/testGlobalExceptionHandler")
+	public Result testGlobalExceptionHandler() {
+		throw new DmException("测试全局异常处理");
 	}
 }

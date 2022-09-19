@@ -4,6 +4,7 @@ import com.dm.study.cloud.exception.DmException;
 import com.dm.study.cloud.vo.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
  * <p>类全名：com.dm.study.cloud.handler.GlobalExceptionHandler</p>
  * 查看帮助：<a href="" target="_blank"></a>
  */
+@ConditionalOnClass(javax.servlet.ServletException.class) // 解决spring cloud gateway报错
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 	private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
