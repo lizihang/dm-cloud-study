@@ -33,4 +33,5 @@ build/
 
 ### 本地日志路径 ###
 log/
+logs/
 test/
