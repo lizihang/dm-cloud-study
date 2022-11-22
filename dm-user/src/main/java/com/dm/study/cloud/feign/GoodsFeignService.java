@@ -20,6 +20,6 @@ import org.springframework.web.bind.annotation.PathVariable;
  */
 @FeignClient(name = ServiceNameConstant.DM_GOODS)
 public interface GoodsFeignService {
-	@GetMapping("/goods/getGoods/{id}")
+	@GetMapping("/feign/goods/getGoods/{id}")
 	Result getGoods(@PathVariable("id") String id);
 }

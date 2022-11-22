@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  * 查看帮助：<a href="" target="_blank"></a>
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/test")
 public class TestController {
 	@Resource
 	SysUserService    userService;
@@ -42,6 +42,17 @@ public class TestController {
 	GoodsFeignService goodsFeignService;
 	@Resource
 	MyNacosProperties myNacosProperties;
+
+	@GetMapping("/testFeign/queryGoods/{id}")
+	public Result queryGoods(@PathVariable String id) {
+		List<SysUser> list = userService.list(new LambdaQueryWrapper<SysUser>().eq(SysUser::getId, id));
+		Result result = goodsFeignService.getGoods(id);
+		if (result.getStatus() == 200) {
+			Object data = result.getData();
+			System.out.println(data.toString());
+		}
+		return Result.success("查询成功！");
+	}
 
 	@GetMapping("/testMyBatisInterceptor/{id}")
 	public Result testMyBatisInterceptor(@PathVariable String id) {

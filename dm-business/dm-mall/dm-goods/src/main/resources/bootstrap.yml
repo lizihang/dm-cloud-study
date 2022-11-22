@@ -1,5 +1,5 @@
 server:
-  port: 19001
+  port: 20101
 spring:
   application:
     name: dm-goods
