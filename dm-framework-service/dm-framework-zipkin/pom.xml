@@ -9,8 +9,8 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>dm-framework-elasticsearch</artifactId>
-    <name>dm-framework-elasticsearch</name>
+    <artifactId>dm-framework-zipkin</artifactId>
+    <name>dm-framework-zipkin</name>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -19,12 +19,6 @@
             <artifactId>dm-common</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-        </dependency>
-
     </dependencies>
 
     <build>

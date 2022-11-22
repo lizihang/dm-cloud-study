@@ -13,7 +13,7 @@ package com.dm.study.cloud.constant;
  * <p>类全名：com.dm.study.cloud.constant.Constants</p>
  * 查看帮助：<a href="" target="_blank"></a>
  */
-public class Constants {
+public final class Constants {
     /***/
     public static final int      HTTP_STATUS_OK_VALUE  = 200;
     /** 用户 redis key */
