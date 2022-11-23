@@ -5,7 +5,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-
 /**
  * <p>标题：</p>
  * <p>功能：</p>
@@ -23,8 +22,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient
 @SpringBootApplication
 public class DmUserApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(DmUserApplication.class, args);
-        SystemUtil.getSystemInfo();
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(DmUserApplication.class, args);
+		SystemUtil.getSystemInfo();
+	}
 }

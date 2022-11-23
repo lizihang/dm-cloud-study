@@ -51,7 +51,7 @@ public class TestController {
 			Object data = result.getData();
 			System.out.println(data.toString());
 		}
-		return Result.success("查询成功！");
+		return Result.success("查询成功！", list);
 	}
 
 	@GetMapping("/testMyBatisInterceptor/{id}")
