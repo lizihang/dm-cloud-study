@@ -17,6 +17,7 @@
     <modules>
         <module>dm-framework-elasticsearch</module>
         <module>dm-framework-zipkin</module>
+        <module>dm-framework-websocket</module>
     </modules>
 </project>
 
