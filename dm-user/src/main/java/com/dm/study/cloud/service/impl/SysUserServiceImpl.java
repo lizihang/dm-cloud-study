@@ -4,9 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dm.study.cloud.dao.SysUserMapper;
+import com.dm.study.cloud.listener.event.TestEvent;
 import com.dm.study.cloud.param.DmUserQueryParams;
 import com.dm.study.cloud.po.SysUser;
 import com.dm.study.cloud.service.SysUserService;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,13 +28,22 @@ import java.util.List;
  * 查看帮助：<a href="" target="_blank"></a>
  */
 @Service
-public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> implements SysUserService {
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> implements SysUserService, ApplicationContextAware {
+	private ApplicationContext context;
+
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		this.context = applicationContext;
+	}
+
 	@Override
 	public Page<SysUser> queryUserPage(DmUserQueryParams params) {
 		Page<SysUser> page = new Page<>(params.getPageNum(), params.getPageSize());
 		QueryWrapper<SysUser> wrapper = buildQueryWrapper(params);
 		Page<SysUser> dmUserPage = baseMapper.selectPage(page, wrapper);
 		dmUserPage.getRecords().forEach(user -> user.setPassword(null));
+		// 测试事件发布及监听器
+		context.publishEvent(new TestEvent(params,"username"));
 		return dmUserPage;
 	}
 
