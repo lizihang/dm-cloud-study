@@ -245,7 +245,7 @@
                     <configuration>
                         <!-- 输出目录 -->
                         <outputDirectory>${output.dir}</outputDirectory>
-                        <!-- 问价名称 -->
+                        <!-- 文件名称 -->
                         <finalName>${project.artifactId}</finalName>
                     </configuration>
                     <executions>
