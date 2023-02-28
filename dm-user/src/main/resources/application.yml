@@ -2,4 +2,4 @@
 # 例:nacos中配置了nacos中dm-user-dev.yaml，这个文件优先级最高，所以会覆盖此文件中的属性
 app:
   db:
-    name: dm2
+    name: dm
