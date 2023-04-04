@@ -77,7 +77,8 @@ public class CustomTestLoadBalancer implements ReactorServiceInstanceLoadBalance
 		if (toServer != null) {
 			for (ServiceInstance ins : instances) {
 				// 192.168.252.140
-				if (ins.getHost().equals(toServer)) {
+				// if (ins.getHost().equals(toServer)) {
+				if (ins.getPort() == Integer.parseInt(toServer)) {
 					return new DefaultResponse(ins);
 				}
 			}

@@ -3,6 +3,7 @@ package com.dm.study.cloud.po;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 /**
  * <p>标题：</p>
  * <p>功能：</p>
@@ -18,7 +19,14 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("sys_role")
+@ToString
+@TableName("dm_sys_role")
 public class SysRole extends BasePO {
-	private static final long serialVersionUID = -8611417340775332277L;
+	private static final long    serialVersionUID = -8611417340775332277L;
+	/* 角色编码 */
+	private              String  roleCode;
+	/* 角色名称 */
+	private              String  roleName;
+	/* 状态 */
+	private              Integer status;
 }

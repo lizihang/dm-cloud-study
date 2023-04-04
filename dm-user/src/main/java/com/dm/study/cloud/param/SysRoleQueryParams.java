@@ -19,5 +19,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SysRoleQueryParams extends QueryParams {
-	private static final long serialVersionUID = 1317206478005860425L;
+	private static final long   serialVersionUID = 1317206478005860425L;
+	/* 角色名称 */
+	private              String roleName;
 }

@@ -1,12 +1,13 @@
 package com.dm.study.cloud.po;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
 import java.util.Date;
-
 /**
  * <p>标题：</p>
  * <p>功能：</p>
@@ -21,64 +22,67 @@ import java.util.Date;
  * 查看帮助：<a href="" target="_blank"></a>
  */
 public class BasePO implements Serializable {
-    private static final long serialVersionUID = -2928960545586924970L;
-    /**
-     * 创建人
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private String createUser;
-    /**
-     * 创建时间
-     */
-    @TableField(fill = FieldFill.INSERT)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date createTime;
-    /**
-     * 修改人
-     */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private String modifyUser;
-    /**
-     * 修改时间
-     */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date modifyTime;
+	private static final long    serialVersionUID = -2928960545586924970L;
+	/* id */
+	@TableId(type = IdType.AUTO)
+	private              Integer id;
+	/* 创建人 */
+	@TableField(fill = FieldFill.INSERT)
+	private              String  createUser;
+	/* 创建时间 */
+	@TableField(fill = FieldFill.INSERT)
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	private              Date    createTime;
+	/* 修改人 */
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private              String  modifyUser;
+	/* 修改时间 */
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	private              Date    modifyTime;
 
-    public String getCreateUser() {
-        return createUser;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public String getCreateUser() {
+		return createUser;
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public void setCreateUser(String createUser) {
+		this.createUser = createUser;
+	}
 
-    public String getModifyUser() {
-        return modifyUser;
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public void setModifyUser(String modifyUser) {
-        this.modifyUser = modifyUser;
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    public Date getModifyTime() {
-        return modifyTime;
-    }
+	public String getModifyUser() {
+		return modifyUser;
+	}
 
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
-    }
+	public void setModifyUser(String modifyUser) {
+		this.modifyUser = modifyUser;
+	}
 
-    @Override
-    public String toString() {
-        return "BasePO{" + "createUser='" + createUser + '\'' + ", createTime=" + createTime + ", modifyUser='" + modifyUser + '\'' + ", modifyTime=" + modifyTime + '}';
-    }
+	public Date getModifyTime() {
+		return modifyTime;
+	}
+
+	public void setModifyTime(Date modifyTime) {
+		this.modifyTime = modifyTime;
+	}
+
+	@Override
+	public String toString() {
+		return "BasePO{" + "id=" + id + ", createUser='" + createUser + '\'' + ", createTime=" + createTime + ", modifyUser='" + modifyUser + '\'' + ", modifyTime=" + modifyTime + '}';
+	}
 }

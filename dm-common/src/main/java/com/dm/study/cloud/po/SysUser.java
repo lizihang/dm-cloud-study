@@ -1,8 +1,6 @@
 package com.dm.study.cloud.po;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.dm.study.cloud.annotation.SensitiveFiled;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -28,51 +26,30 @@ import lombok.Setter;
 @TableName("sys_user")
 public class SysUser extends BasePO {
 	private static final long    serialVersionUID = -8073239705877216992L;
-	/**
-	 * id
-	 */
-	@TableId(type = IdType.AUTO)
-	private              Integer id;
-	/**
-	 * 用户名
-	 */
+	/* 用户名 */
 	private              String  username;
-	/**
-	 * 密码
-	 */
+	/* 密码 */
 	@JSONField(serialize = false)
 	// Redisson配置了JsonJacksonCodec序列化方式，序列化时使用此注解忽略该字段
 	// spring security 登录的时候也给忽略了导致登录不上，注掉，写redis时候另外处理
 	// @JsonIgnore
 	private              String  password;
-	/**
-	 * 昵称
-	 */
+	/* 昵称 */
 	private              String  nickname;
-	/**
-	 * 邮箱
-	 */
+	/* 邮箱 */
 	@SensitiveFiled
 	private              String  email;
-	/**
-	 * 手机号
-	 */
+	/* 手机号 */
 	private              String  phone;
-	/**
-	 * 性别
-	 */
+	/* 性别 */
 	private              Integer gender;
-	/**
-	 * 头像
-	 */
+	/* 头像 */
 	private              String  avatar;
-	/**
-	 * 状态
-	 */
+	/* 状态 */
 	private              Integer status;
 
 	@Override
 	public String toString() {
-		return "SysUser{" + "id=" + id + ", username='" + username + '\'' + ", password='" + password + '\'' + ", nickname='" + nickname + '\'' + ", email='" + email + '\'' + ", phone='" + phone + '\'' + ", gender=" + gender + ", avatar='" + avatar + '\'' + ", status='" + status + '\'' + "} " + super.toString();
+		return "SysUser{" + "username='" + username + '\'' + ", password='" + password + '\'' + ", nickname='" + nickname + '\'' + ", email='" + email + '\'' + ", phone='" + phone + '\'' + ", gender=" + gender + ", avatar='" + avatar + '\'' + ", status=" + status + "} " + super.toString();
 	}
 }

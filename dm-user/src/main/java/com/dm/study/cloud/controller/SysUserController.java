@@ -5,6 +5,7 @@ import com.dm.study.cloud.param.DmUserQueryParams;
 import com.dm.study.cloud.service.SysUserService;
 import com.dm.study.cloud.vo.Result;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,7 +36,7 @@ public class SysUserController {
 	 */
 	@DmLog
 	@PostMapping("/queryUserPage")
-	public Result queryUserPage(DmUserQueryParams params) {
+	public Result queryUserPage(@RequestBody DmUserQueryParams params) {
 		return Result.success("查询成功！", userService.queryUserPage(params));
 	}
 

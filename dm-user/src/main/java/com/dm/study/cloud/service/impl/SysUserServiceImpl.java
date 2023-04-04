@@ -9,6 +9,7 @@ import com.dm.study.cloud.listener.event.TestEvent;
 import com.dm.study.cloud.param.DmUserQueryParams;
 import com.dm.study.cloud.po.SysUser;
 import com.dm.study.cloud.service.SysUserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -75,9 +76,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
 	private QueryWrapper<SysUser> buildQueryWrapper(DmUserQueryParams params) {
 		QueryWrapper<SysUser> wrapper = new QueryWrapper<>();
 		wrapper.eq(params.getId() != null, "id", params.getId());
-		wrapper.like(params.getUsername() != null, "username", params.getUsername());
-		wrapper.like(params.getNickname() != null, "nickname", params.getNickname());
-		wrapper.like(params.getEmail() != null, "email", params.getEmail());
+		wrapper.like(StringUtils.isNotEmpty(params.getUsername()), "username", params.getUsername());
+		wrapper.like(StringUtils.isNotEmpty(params.getNickname()), "nickname", params.getNickname());
+		wrapper.like(StringUtils.isNotEmpty(params.getEmail()), "email", params.getEmail());
 		wrapper.eq(params.getStatus() != null, "status", params.getStatus());
 		return wrapper;
 	}
