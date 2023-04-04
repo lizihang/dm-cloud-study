@@ -1,6 +1,7 @@
 package com.dm.study.cloud.vo;
 
 import com.dm.study.cloud.po.SysUser;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -63,6 +64,7 @@ public class LoginUser implements UserDetails, CredentialsContainer {
 	/**
 	 * 权限列表
 	 */
+	@JsonIgnore
 	private              List<GrantedAuthority> authorities;
 
 	public LoginUser() {

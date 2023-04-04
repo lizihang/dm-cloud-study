@@ -40,4 +40,11 @@ public interface SysUserService extends IService<SysUser> {
 	 * @return 用户对象
 	 */
 	SysUser queryUserInfo(DmUserQueryParams params);
+
+	/**
+	 * 根据用户名查询用户
+	 * @param username
+	 * @return
+	 */
+	SysUser queryUserByUsername(String username);
 }

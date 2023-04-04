@@ -37,7 +37,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         // TODO 登录成功 记录日志
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        redisUtil.setCacheObject(Constants.LOGIN_USER_KEY + loginUser.getUsername(), loginUser);
+        redisUtil.setCacheObject(Constants.USER_KEY + loginUser.getUsername(), loginUser);
         Result result = Result.success("登录成功", loginUser);
         ServletUtil.render(response, result);
     }

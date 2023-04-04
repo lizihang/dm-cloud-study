@@ -43,7 +43,7 @@ import javax.annotation.Resource;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	@Resource()
+	@Resource
 	private UserDetailsService                  userDetailsService;
 	/**
 	 * 登录成功的处理

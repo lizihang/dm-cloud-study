@@ -1,7 +1,9 @@
 package com.dm.study.cloud.feign;
 
+import com.dm.study.cloud.po.SysUser;
 import com.dm.study.cloud.vo.Result;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 /**
  * <p>标题：公共接口方式实现feign</p>
  * <p>功能：</p>
@@ -21,4 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public interface ToUserService {
 	@GetMapping("/user/testFeign")
 	Result testFeign();
+
+	@PostMapping("/queryUserByUsername")
+	SysUser queryUserByUsername(String username);
 }

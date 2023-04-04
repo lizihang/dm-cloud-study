@@ -1,8 +1,13 @@
 package com.dm.study.cloud.controller.feign;
 
 import com.dm.study.cloud.feign.ToUserService;
+import com.dm.study.cloud.po.SysUser;
+import com.dm.study.cloud.service.SysUserService;
 import com.dm.study.cloud.vo.Result;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 /**
  * <p>标题：feign调用controller</p>
  * <p>功能：</p>
@@ -18,6 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class UserFeignController implements ToUserService {
+	@Resource
+	SysUserService userService;
+
 	/**
 	 * 测试公共接口实现feign调用
 	 * @return
@@ -25,5 +33,10 @@ public class UserFeignController implements ToUserService {
 	@Override
 	public Result testFeign() {
 		return Result.success("feign调用成功！");
+	}
+
+	@Override
+	public SysUser queryUserByUsername(@RequestBody String username) {
+		return userService.queryUserByUsername(username);
 	}
 }

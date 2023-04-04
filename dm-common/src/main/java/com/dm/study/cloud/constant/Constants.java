@@ -21,7 +21,7 @@ public final class Constants {
     /** 是否检查权限 */
     public static final boolean  IS_CHECK_PERMISSION   = false;
     /** 登录用户 redis key */
-    public static final String   LOGIN_USER_KEY        = "login_user:";
+    // public static final String   LOGIN_USER_KEY        = "login_user:";
     /** 请求中TOKEN名 */
     public static final String   TOKEN_HEADER          = "Authorization";
     /** 令牌前缀 注意后边带空格*/

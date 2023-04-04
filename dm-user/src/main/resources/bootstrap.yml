@@ -3,3 +3,9 @@ server:
 spring:
   application:
     name: dm-user
+  cloud:
+    nacos:
+      discovery:
+        metadata:
+          version: 1.0
+          mymsg: 测试元数据配置

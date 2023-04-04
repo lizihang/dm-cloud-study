@@ -5,7 +5,6 @@ import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-
 /**
  * <p>标题：</p>
  * <p>功能：</p>
@@ -21,29 +20,39 @@ import javax.annotation.Resource;
  */
 @Component
 public class RedisUtil {
+	@Resource
+	private RedissonClient client;
 
-    @Resource
-    private RedissonClient client;
+	/**
+	 * 缓存基本的对象，Integer、String、实体类等
+	 * @param key 键
+	 * @param value 值
+	 * @param <T> 泛型
+	 */
+	public <T> void setCacheObject(final String key, final T value) {
+		RBucket<T> bucket = client.getBucket(key);
+		bucket.set(value);
+	}
 
-    /**
-     * 缓存基本的对象，Integer、String、实体类等
-     * @param key   键
-     * @param value 值
-     * @param <T>   泛型
-     */
-    public <T> void setCacheObject(final String key, final T value) {
-        RBucket<T> bucket = client.getBucket(key);
-        bucket.set(value);
-    }
+	/**
+	 * 获得缓存的基本对象。
+	 * @param key 键
+	 * @param <T> 泛型
+	 * @return 值
+	 */
+	public <T> T getCacheObject(final String key) {
+		RBucket<T> bucket = client.getBucket(key);
+		return bucket.get();
+	}
 
-    /**
-     * 获得缓存的基本对象。
-     * @param key 键
-     * @param <T> 泛型
-     * @return 值
-     */
-    public <T> T getCacheObject(final String key) {
-        RBucket<T> bucket = client.getBucket(key);
-        return bucket.get();
-    }
+	/**
+	 * 根据key删除缓存
+	 * @param key 键
+	 * @param <T> 泛型
+	 * @return 是否成功
+	 */
+	public <T> boolean deleteCacheObject(final String key) {
+		RBucket<T> bucket = client.getBucket(key);
+		return bucket.delete();
+	}
 }

@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.dm.study.cloud.annotation.SensitiveFiled;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,7 +41,9 @@ public class SysUser extends BasePO {
 	 * 密码
 	 */
 	@JSONField(serialize = false)
-	@JsonIgnore // Redisson配置了JsonJacksonCodec序列化方式，序列化时使用此注解忽略该字段
+	// Redisson配置了JsonJacksonCodec序列化方式，序列化时使用此注解忽略该字段
+	// spring security 登录的时候也给忽略了导致登录不上，注掉，写redis时候另外处理
+	// @JsonIgnore
 	private              String  password;
 	/**
 	 * 昵称

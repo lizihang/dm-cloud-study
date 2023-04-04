@@ -1,5 +1,6 @@
 package com.dm.study.cloud.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -43,7 +44,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
 		Page<SysUser> dmUserPage = baseMapper.selectPage(page, wrapper);
 		dmUserPage.getRecords().forEach(user -> user.setPassword(null));
 		// 测试事件发布及监听器
-		context.publishEvent(new TestEvent(params,"username"));
+		context.publishEvent(new TestEvent(params, "username"));
 		return dmUserPage;
 	}
 
@@ -56,6 +57,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
 	@Override
 	public SysUser queryUserInfo(DmUserQueryParams params) {
 		QueryWrapper<SysUser> wrapper = buildQueryWrapper(params);
+		return baseMapper.selectOne(wrapper);
+	}
+
+	@Override
+	public SysUser queryUserByUsername(String username) {
+		LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
+		wrapper.eq(SysUser::getUsername, username);
 		return baseMapper.selectOne(wrapper);
 	}
 
