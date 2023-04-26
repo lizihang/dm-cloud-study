@@ -11,6 +11,7 @@ import com.dm.study.cloud.po.TestGroupingBy;
 import com.dm.study.cloud.service.SysUserService;
 import com.dm.study.cloud.vo.Result;
 import org.redisson.api.RedissonClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -42,6 +43,8 @@ public class TestController {
 	GoodsFeignService goodsFeignService;
 	@Resource
 	MyNacosProperties myNacosProperties;
+	@Value("${server.port}")
+	int               port;
 
 	@GetMapping("/testFeign/queryGoods/{id}")
 	public Result queryGoods(@PathVariable String id) {
@@ -145,5 +148,14 @@ public class TestController {
 	@GetMapping("/testGlobalExceptionHandler")
 	public Result testGlobalExceptionHandler() {
 		throw new DmException("测试全局异常处理");
+	}
+
+	/**
+	 * 测试全自定义负载均衡
+	 * @return
+	 */
+	@PostMapping("/queryPort")
+	public Result queryPort() {
+		return Result.success("本服务端口为：" + port);
 	}
 }

@@ -4,7 +4,7 @@ import com.dm.study.cloud.annotation.DmLog;
 import com.dm.study.cloud.param.SysMenuQueryParams;
 import com.dm.study.cloud.service.SysMenuService;
 import com.dm.study.cloud.vo.Result;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +33,7 @@ public class SysMenuController {
 	 * @return
 	 */
 	@DmLog
-	@GetMapping("/queryMenuList")
+	@PostMapping("/queryMenuList")
 	public Result queryMenuList(SysMenuQueryParams params) {
 		return Result.success("查询菜单列表成功！", menuService.queryMenuList(params));
 	}
