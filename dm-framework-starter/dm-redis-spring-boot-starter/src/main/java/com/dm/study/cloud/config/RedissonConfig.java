@@ -177,7 +177,7 @@ public class RedissonConfig {
 		} else {
 			// 2.配置文件方式
 			try {
-				config = Config.fromYAML(RedissonConfig.class.getClassLoader().getResource("redisson-single2.yaml"));
+				config = Config.fromYAML(RedissonConfig.class.getClassLoader().getResource("redisson-single.yaml"));
 				config.useSingleServer();
 			} catch (IOException e) {
 				e.printStackTrace();
