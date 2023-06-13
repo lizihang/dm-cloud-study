@@ -7,11 +7,6 @@ import com.dm.study.cloud.exception.DmException;
 import com.dm.study.cloud.util.TikaUtil;
 import com.dm.study.cloud.vo.Result;
 import com.huaban.analysis.jieba.JiebaSegmenter;
-import edu.stanford.nlp.ling.CoreAnnotations;
-import edu.stanford.nlp.ling.CoreLabel;
-import edu.stanford.nlp.pipeline.Annotation;
-import edu.stanford.nlp.pipeline.StanfordCoreNLP;
-import edu.stanford.nlp.util.CoreMap;
 import io.milvus.client.MilvusServiceClient;
 import io.milvus.grpc.MutationResult;
 import io.milvus.param.R;
@@ -32,7 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -158,32 +152,6 @@ public class TikaTestController {
 		List<String> strings = jiebaSegmenter.sentenceProcess(inputStr);
 		for (String s : strings) {
 			System.out.println(s);
-		}
-		return Result.success("成功！");
-	}
-
-	/**
-	 * 测试Stanford分词
-	 * @param file
-	 * @return
-	 */
-	@PostMapping("/testStanford")
-	public Result testStanford(MultipartFile file) throws IOException {
-		// 1.读取PDF
-		String inputStr = TikaUtil.getPDFString(file);
-		StanfordCoreNLP pipline = new StanfordCoreNLP("StanfordCoreNLP-chinese.properties");
-		// String[] args = new String[] {"-props", "properies/CoreNLP-Seg-CH.properties"};
-		// Properties properties = StringUtils.argsToProperties(args);
-		// StanfordCoreNLP pipline = new StanfordCoreNLP(properties);
-		Annotation annotation = new Annotation(inputStr);
-		pipline.annotate(annotation);
-		List<CoreMap> sentences = annotation.get(CoreAnnotations.SentencesAnnotation.class);
-		//从CoreMap 中取出CoreLabel List ,打印
-		for (CoreMap sentence : sentences){
-			for (CoreLabel token : sentence.get(CoreAnnotations.TokensAnnotation.class)){
-				String word = token.get(CoreAnnotations.TextAnnotation.class);
-				System.out.println(word);
-			}
 		}
 		return Result.success("成功！");
 	}
