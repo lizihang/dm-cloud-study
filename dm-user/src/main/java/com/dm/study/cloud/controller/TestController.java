@@ -1,5 +1,6 @@
 package com.dm.study.cloud.controller;
 
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dm.study.cloud.config.MyNacosProperties;
@@ -151,11 +152,21 @@ public class TestController {
 	}
 
 	/**
-	 * 测试全自定义负载均衡
+	 * 测试自定义负载均衡
 	 * @return
 	 */
 	@PostMapping("/queryPort")
 	public Result queryPort() {
 		return Result.success("本服务端口为：" + port);
+	}
+
+	// blockHandler 函数，原方法调用被限流/降级/系统保护的时候调用
+	public Result handleException(BlockException ex) {
+		return Result.success("ex:" + ex.toString());
+	}
+
+	// fallback 函数，原方法调用被降级的时候调用
+	public Result fallback(Throwable e) {
+		return Result.error(500, "ex:" + e.toString());
 	}
 }

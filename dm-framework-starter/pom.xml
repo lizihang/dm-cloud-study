@@ -15,7 +15,8 @@
     <description>框架底层starter</description>
 
     <modules>
-        <module>dm-redis-spring-boot-starter</module>
+        <module>dm-milvus-spring-boot-starter</module>
         <module>dm-mybatis-spring-boot-starter</module>
+        <module>dm-redis-spring-boot-starter</module>
     </modules>
 </project>

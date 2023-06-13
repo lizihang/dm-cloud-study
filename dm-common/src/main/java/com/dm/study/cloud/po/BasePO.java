@@ -22,30 +22,30 @@ import java.util.Date;
  * 查看帮助：<a href="" target="_blank"></a>
  */
 public class BasePO implements Serializable {
-	private static final long    serialVersionUID = -2928960545586924970L;
+	private static final long   serialVersionUID = -2928960545586924970L;
 	/* id */
-	@TableId(type = IdType.AUTO)
-	private              Integer id;
+	@TableId(type = IdType.ASSIGN_UUID)
+	private              String id;
 	/* 创建人 */
 	@TableField(fill = FieldFill.INSERT)
-	private              String  createUser;
+	private              String createUser;
 	/* 创建时间 */
 	@TableField(fill = FieldFill.INSERT)
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	private              Date    createTime;
+	private              Date   createTime;
 	/* 修改人 */
 	@TableField(fill = FieldFill.INSERT_UPDATE)
-	private              String  modifyUser;
+	private              String modifyUser;
 	/* 修改时间 */
 	@TableField(fill = FieldFill.INSERT_UPDATE)
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	private              Date    modifyTime;
+	private              Date   modifyTime;
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

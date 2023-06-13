@@ -6,10 +6,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 /**
  * <p>标题：</p>
  * <p>功能：</p>
@@ -37,6 +41,26 @@ public class GlobalExceptionHandler {
 	public Result baseException(DmException exception) {
 		logger.error("自定义异常！错误信息：" + exception.getMessage());
 		return Result.error(HttpStatus.INTERNAL_SERVER_ERROR.value(), exception.getMessage());
+	}
+
+	/**
+	 * BindException 非空校验
+	 * @param exception
+	 * @return
+	 */
+	@ExceptionHandler(value = BindException.class)
+	public Result handleBindException(BindException exception) {
+		List<ObjectError> allErrors = exception.getAllErrors();
+		StringBuilder msg = new StringBuilder();
+		for (ObjectError err : allErrors) {
+			if (err instanceof FieldError) {
+				FieldError e = (FieldError) err;
+				msg.append(e.getField()).append(e.getDefaultMessage()).append(",");
+			}
+		}
+		String msgStr = msg.substring(0, msg.length() - 1);
+		logger.error(msgStr, exception);
+		return Result.error(msgStr);
 	}
 
 	/**

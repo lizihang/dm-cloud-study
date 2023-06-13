@@ -1,9 +1,6 @@
 package com.dm.study.cloud.vo;
 
-import com.dm.study.cloud.constant.Constants;
-
 import java.io.Serializable;
-
 /**
  * <p>标题：</p>
  * <p>功能：</p>
@@ -18,75 +15,75 @@ import java.io.Serializable;
  * 查看帮助：<a href="" target="_blank"></a>
  */
 public class Result implements Serializable {
-    private static final long serialVersionUID = -2491020297441477914L;
-    /**
-     * 状态
-     */
-    private int status;
-    /**
-     * 消息
-     */
-    private String msg;
-    /**
-     * 数据
-     */
-    private Object data;
+	private static final long   serialVersionUID = -2491020297441477914L;
+	/**
+	 * 状态:1=成功；0=失败
+	 */
+	private              int    status;
+	/**
+	 * 消息
+	 */
+	private              String msg;
+	/**
+	 * 数据
+	 */
+	private              Object data;
 
-    private Result() {
-    }
+	private Result() {
+	}
 
-    private Result(int status, String msg, Object data) {
-        this.status = status;
-        this.msg = msg;
-        this.data = data;
-    }
+	private Result(int status, String msg, Object data) {
+		this.status = status;
+		this.msg = msg;
+		this.data = data;
+	}
 
-    public static Result success(String msg) {
-        return success(msg, null);
-    }
+	public static Result success(String msg) {
+		return success(msg, null);
+	}
 
-    public static Result success(String msg, Object data) {
-        return new Result(Constants.HTTP_STATUS_OK_VALUE, msg, data);
-    }
+	public static Result success(String msg, Object data) {
+		return new Result(1, msg, data);
+	}
 
-    public static Result error(int errorCode, String msg) {
-        return error(errorCode, msg, null);
-    }
+	public static Result error(String msg) {
+		return error(0, msg);
+	}
 
-    public static Result error(int errorCode, String msg, Object data) {
-        return new Result(errorCode, msg, data);
-    }
+	public static Result error(int errorCode, String msg) {
+		return error(errorCode, msg, null);
+	}
 
-    public int getStatus() {
-        return status;
-    }
+	public static Result error(int errorCode, String msg, Object data) {
+		return new Result(errorCode, msg, data);
+	}
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
+	public int getStatus() {
+		return status;
+	}
 
-    public String getMsg() {
-        return msg;
-    }
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
+	public String getMsg() {
+		return msg;
+	}
 
-    public Object getData() {
-        return data;
-    }
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
 
-    public void setData(Object data) {
-        this.data = data;
-    }
+	public Object getData() {
+		return data;
+	}
 
-    @Override
-    public String toString() {
-        return "Result{" +
-                "status=" + status +
-                ", msg='" + msg + '\'' +
-                ", data=" + data +
-                '}';
-    }
+	public void setData(Object data) {
+		this.data = data;
+	}
+
+	@Override
+	public String toString() {
+		return "Result{" + "status=" + status + ", msg='" + msg + '\'' + ", data=" + data + '}';
+	}
 }

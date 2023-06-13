@@ -3,6 +3,8 @@ package com.dm.study.cloud.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.dm.study.cloud.param.SysMenuQueryParams;
 import com.dm.study.cloud.po.SysMenu;
+import com.dm.study.cloud.util.MybatisRedisCache;
+import org.apache.ibatis.annotations.CacheNamespace;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

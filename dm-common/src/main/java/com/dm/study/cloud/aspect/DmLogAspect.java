@@ -2,6 +2,7 @@ package com.dm.study.cloud.aspect;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
+import com.dm.study.cloud.constant.Constants;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -77,7 +78,7 @@ public class DmLogAspect {
 		StringBuilder sb = new StringBuilder();
 		sb.append(LINE_SEPARATOR);
 		// 打印请求相关参数
-		sb.append("========================================== Start ==========================================").append(LINE_SEPARATOR);
+		sb.append(Constants.LOG_START_FLAG).append(LINE_SEPARATOR);
 		// 服务名称
 		sb.append("Application Name  : ").append(applicationName).append(LINE_SEPARATOR);
 		// 打印请求 url
@@ -96,7 +97,7 @@ public class DmLogAspect {
 		sb.append("Response Args     : ").append(jsonResult).append(LINE_SEPARATOR);
 		// 执行耗时
 		sb.append("Time-Consuming    : ").append(System.currentTimeMillis() - startTime).append(" ms").append(LINE_SEPARATOR);
-		sb.append("=========================================== End ===========================================").append(LINE_SEPARATOR);
+		sb.append(Constants.LOG_END_FLAG).append(LINE_SEPARATOR);
 		logger.info(sb.toString());
 		return result;
 	}
