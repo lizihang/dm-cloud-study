@@ -20,6 +20,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -153,6 +156,23 @@ public class TikaTestController {
 		for (String s : strings) {
 			System.out.println(s);
 		}
+		return Result.success("成功！");
+	}
+
+	/**
+	 * @param file
+	 * @return
+	 */
+	@PostMapping("/testPDFBox")
+	public Result testPDFBox(MultipartFile file) throws Exception {
+		try (InputStream in = file.getInputStream()) {
+			PDDocument load = PDDocument.load(in);
+			PDFTextStripper stripper = new PDFTextStripper();
+			stripper.setSortByPosition(true);
+			String text = stripper.getText(load);
+			System.out.println(text);
+		}
+		// 为了测试，少传点
 		return Result.success("成功！");
 	}
 }

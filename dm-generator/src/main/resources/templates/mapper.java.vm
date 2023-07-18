@@ -1,0 +1,27 @@
+package ${package.Mapper};
+
+import ${package.Entity}.${entity};
+import ${superMapperClassPackage};
+import org.apache.ibatis.annotations.Mapper;
+
+/**
+ * <p>标题：</p>
+ * <p>功能：</p>
+ * <pre>
+ * 其他说明：MyBatis-Plus自动生成Mapper
+ * </pre>
+ * <p>作者：${author}</p>
+ * <p>审核：</p>
+ * <p>重构：</p>
+ * <p>创建日期：${YEAR}年${MONTH}月${DAY}日 ${TIME}</p>
+ * <p>类全名：${package.Mapper}.${table.mapperName}</p>
+ * 查看帮助：<a href="" target="_blank"></a>
+ */
+@Mapper
+#if(${kotlin})
+interface ${table.mapperName} : ${superMapperClass}<${entity}>
+#else
+public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
+
+}
+#end

@@ -1,0 +1,24 @@
+package ${package.Service};
+
+import ${package.Entity}.${entity};
+import ${superServiceClassPackage};
+/**
+ * <p>标题：</p>
+ * <p>功能：</p>
+ * <pre>
+ * 其他说明：MyBatis-Plus自动生成Service
+ * </pre>
+ * <p>作者：${author}</p>
+ * <p>审核：</p>
+ * <p>重构：</p>
+ * <p>创建日期：${YEAR}年${MONTH}月${DAY}日 ${TIME}</p>
+ * <p>类全名：${package.Service}.${table.serviceName}</p>
+ * 查看帮助：<a href="" target="_blank"></a>
+ */
+#if(${kotlin})
+interface ${table.serviceName} : ${superServiceClass}<${entity}>
+#else
+public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+
+}
+#end

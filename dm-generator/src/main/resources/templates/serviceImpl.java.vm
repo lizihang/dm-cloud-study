@@ -1,0 +1,30 @@
+package ${package.ServiceImpl};
+
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+import ${superServiceImplClassPackage};
+import org.springframework.stereotype.Service;
+/**
+ * <p>标题：</p>
+ * <p>功能：</p>
+ * <pre>
+ * 其他说明：MyBatis-Plus自动生成ServiceImpl
+ * </pre>
+ * <p>作者：${author}</p>
+ * <p>审核：</p>
+ * <p>重构：</p>
+ * <p>创建日期：${YEAR}年${MONTH}月${DAY}日 ${TIME}</p>
+ * <p>类全名：${package.ServiceImpl}.${table.serviceImplName}</p>
+ * 查看帮助：<a href="" target="_blank"></a>
+ */
+@Service
+#if(${kotlin})
+open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
+
+}
+#else
+public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+
+}
+#end
