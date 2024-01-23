@@ -1,9 +1,11 @@
 package com.dm.study.cloud.po;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 /**
  * <p>标题：</p>
@@ -24,21 +26,19 @@ import java.util.List;
 public class SysMenu extends BasePO {
 	private static final long          serialVersionUID = 7497267136149976058L;
 	/**
+	 * 父菜单id
+	 */
+	private              String        parentId;
+	/**
 	 * 菜单名称
 	 */
+	@NotEmpty
 	private              String        name;
 	/**
 	 * 菜单路由
 	 */
+	@NotEmpty
 	private              String        router;
-	/**
-	 * 菜单图标
-	 */
-	private              String        icon_class;
-	/**
-	 * 菜单分组
-	 */
-	private              String        group;
 	/**
 	 * 排序号
 	 */
@@ -48,16 +48,17 @@ public class SysMenu extends BasePO {
 	 */
 	private              Integer       level;
 	/**
-	 * 父菜单id
+	 * 菜单图标
 	 */
-	private              Integer       parent_id;
+	private              String        iconClass;
 	/**
 	 * 子菜单
 	 */
+	@TableField(exist = false)
 	private              List<SysMenu> subMenus;
 
 	@Override
 	public String toString() {
-		return "SysMenu{" + "name='" + name + '\'' + ", router='" + router + '\'' + ", icon_class='" + icon_class + '\'' + ", group='" + group + '\'' + ", idx=" + idx + ", level=" + level + ", parent_id=" + parent_id + ", subMenus=" + subMenus + "} " + super.toString();
+		return "SysMenu{" + "name='" + name + '\'' + ", router='" + router + '\'' + ", iconClass='" + iconClass + '\'' + ", idx=" + idx + ", level=" + level + ", parentId=" + parentId + ", subMenus=" + subMenus + "} " + super.toString();
 	}
 }

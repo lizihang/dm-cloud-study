@@ -96,7 +96,7 @@ public class DmLogAspect {
 		String jsonResult = JSON.toJSONString(result);
 		sb.append("Response Args     : ").append(jsonResult).append(LINE_SEPARATOR);
 		// 执行耗时
-		sb.append("Time-Consuming    : ").append(System.currentTimeMillis() - startTime).append(" ms").append(LINE_SEPARATOR);
+		sb.append("Time Consuming    : ").append(System.currentTimeMillis() - startTime).append(" ms").append(LINE_SEPARATOR);
 		sb.append(Constants.LOG_END_FLAG).append(LINE_SEPARATOR);
 		logger.info(sb.toString());
 		return result;

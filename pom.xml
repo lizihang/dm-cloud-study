@@ -265,8 +265,15 @@
                 <artifactId>pdfbox</artifactId>
                 <version>2.0.25</version>
             </dependency>
-<!--
 
+            <!-- JSch库 -->
+            <dependency>
+                <groupId>com.jcraft</groupId>
+                <artifactId>jsch</artifactId>
+                <version>0.1.55</version>
+            </dependency>
+
+            <!--
             <dependency>
                 <groupId>org.apache.pdfbox</groupId>
                 <artifactId>fontbox</artifactId>
@@ -290,7 +297,7 @@
                 <artifactId>pdfbox-tools</artifactId>
                 <version>2.0.25</version>
             </dependency>
--->
+            -->
 
         </dependencies>
     </dependencyManagement>

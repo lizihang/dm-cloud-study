@@ -19,5 +19,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SysMenuQueryParams extends QueryParams {
-	private static final long serialVersionUID = -2221856647601704174L;
+	private static final long    serialVersionUID = -2221856647601704174L;
+	// 菜单名称
+	private              String  name;
+	// 父菜单ID
+	private              Integer parentId;
 }

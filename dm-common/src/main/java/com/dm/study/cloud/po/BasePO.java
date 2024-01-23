@@ -24,7 +24,7 @@ import java.util.Date;
 public class BasePO implements Serializable {
 	private static final long   serialVersionUID = -2928960545586924970L;
 	/* id */
-	@TableId(type = IdType.ASSIGN_UUID)
+	@TableId(type = IdType.AUTO)
 	private              String id;
 	/* 创建人 */
 	@TableField(fill = FieldFill.INSERT)

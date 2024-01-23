@@ -20,4 +20,6 @@ import java.util.List;
  */
 public interface SysMenuService extends IService<SysMenu> {
 	List<SysMenu> queryMenuList(SysMenuQueryParams params);
+
+	SysMenu addMenu(SysMenu menu);
 }

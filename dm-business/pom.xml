@@ -17,6 +17,7 @@
     <modules>
         <module>dm-exam</module>
         <module>dm-mall</module>
+        <module>dm-chat</module>
     </modules>
 </project>
 
