@@ -1,7 +1,7 @@
 package com.dm.study.cloud.handler;
 
 import com.dm.study.cloud.util.RedisUtil;
-import com.dm.study.cloud.util.ServletUtil;
+import com.dm.study.cloud.util.HttpUtil;
 import com.dm.study.cloud.vo.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,6 +88,6 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 			// TODO
 			// redisUtil.deleteObject(Constants.USER_KEY + username);
 		}
-		ServletUtil.render(response, result);
+		HttpUtil.render(response, result);
 	}
 }

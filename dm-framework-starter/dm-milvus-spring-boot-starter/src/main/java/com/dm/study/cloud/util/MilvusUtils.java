@@ -13,10 +13,7 @@ import io.milvus.param.IndexType;
 import io.milvus.param.MetricType;
 import io.milvus.param.R;
 import io.milvus.param.RpcStatus;
-import io.milvus.param.collection.CreateCollectionParam;
-import io.milvus.param.collection.FieldType;
-import io.milvus.param.collection.LoadCollectionParam;
-import io.milvus.param.collection.ReleaseCollectionParam;
+import io.milvus.param.collection.*;
 import io.milvus.param.dml.InsertParam;
 import io.milvus.param.dml.SearchParam;
 import io.milvus.param.index.CreateIndexParam;
@@ -45,40 +42,32 @@ public class MilvusUtils {
 	@Resource
 	MilvusServiceClient milvusClient;
 
+	// public void createDatabase(){
+	// 	CreateDatabaseParam param = CreateDatabaseParam.newBuilder().withDatabaseName().build();
+	// 	milvusClient.createDatabase()
+	// }
+
 	public boolean createCollection(CollectionParams param) {
 		String collectionName = param.getCollectionName();
 		String description = param.getDescription();
-		int shardsNum = param.getShardsNum();
-		List<FieldTypeParams> ftParams = param.getFiledTypeList();
-		/*
-		FieldType fieldType1 = FieldType.newBuilder() //
-				.withName("book_id") //
-				.withDataType(DataType.Int64) //
-				.withPrimaryKey(true) //
-				.withAutoID(false) //
-				.build();
-		FieldType fieldType2 = FieldType.newBuilder() //
-				.withName("word_count") //
-				.withDataType(DataType.Int64) //
-				.build(); //
-		FieldType fieldType3 = FieldType.newBuilder() //
-				.withName("book_intro") //
-				.withDataType(DataType.FloatVector) //
-				.withDimension(2) //
-				.build();
-		CreateCollectionParam createCollectionReq = CreateCollectionParam.newBuilder() //
-				.withCollectionName(collectionName) //
-				.withDescription("Test book search java") //
-				.withShardsNum(2) //
-				.addFieldType(fieldType1) //
-				.addFieldType(fieldType2) //
-				.addFieldType(fieldType3) //
-				.build();
-		*/
+		Integer shardsNum = param.getShardsNum();
+		if (shardsNum == null) {
+			shardsNum = 3;
+		}
+		String databaseName = param.getDatabaseName();
+		if (StringUtils.isEmpty(databaseName)) {
+			databaseName = "default";
+		}
+		// 构建collection基本信息
 		CreateCollectionParam.Builder builder = CreateCollectionParam.newBuilder() //
-				.withCollectionName(collectionName) //
-				.withDescription(description) //
+				.withDatabaseName(databaseName) // 数据库名称
+				.withCollectionName(collectionName) // 集合名称
+				.withDescription(description) // 描述
+				.withConsistencyLevel(ConsistencyLevelEnum.BOUNDED) // 默认bounded
 				.withShardsNum(shardsNum);
+		// 构建collection字段信息
+		List<FieldTypeParams> ftParams = param.getFiledTypeList();
+		CollectionSchemaParam.Builder schemaBuilder = CollectionSchemaParam.newBuilder();
 		for (FieldTypeParams fieldTypeParam : ftParams) {
 			FieldType.Builder fieldBuilder = FieldType.newBuilder();
 			if (fieldTypeParam.getAutoID() != null) {
@@ -99,9 +88,13 @@ public class MilvusUtils {
 			if (fieldTypeParam.getDimension() != null) {
 				fieldBuilder.withDimension(fieldTypeParam.getDimension());
 			}
+			if (fieldTypeParam.getMaxLength() != null) {
+				fieldBuilder.withMaxLength(fieldTypeParam.getMaxLength());
+			}
 			FieldType fieldType = fieldBuilder.build();
-			builder.addFieldType(fieldType);
+			schemaBuilder.addFieldType(fieldType);
 		}
+		builder.withSchema(schemaBuilder.build());
 		CreateCollectionParam createCollectionParam = builder.build();
 		// 创建collection
 		R<RpcStatus> result = milvusClient.createCollection(createCollectionParam);

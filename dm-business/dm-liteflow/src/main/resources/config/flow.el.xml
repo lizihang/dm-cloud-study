@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow>
+    <chain name="chain1">
+        THEN(inputComponent, searchComponent);
+    </chain>
+
+    <chain name="chain2">
+        THEN(inputComponent, searchComponent, searchComponent);
+    </chain>
+
+    <chain name="chain3">
+        THEN(inputComponent, searchComponent.tag("111"), searchComponent.tag("222"));
+    </chain>
+
+    <chain name="chain4">
+        THEN(inputComponent, WHEN(searchComponent.tag("111"), searchComponent.tag("222")));
+    </chain>
+</flow>

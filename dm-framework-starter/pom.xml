@@ -18,5 +18,6 @@
         <module>dm-milvus-spring-boot-starter</module>
         <module>dm-mybatis-spring-boot-starter</module>
         <module>dm-redis-spring-boot-starter</module>
+        <module>dm-neo4j-spring-boot-starter</module>
     </modules>
 </project>

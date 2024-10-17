@@ -1,15 +1,12 @@
 package com.dm.study.cloud.util;
 
 import com.dm.study.cloud.constant.Constants;
-import com.dm.study.cloud.vo.LoginUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,9 +25,6 @@ import java.util.Map;
  */
 @Component
 public class JwtTokenUtil {
-	@Resource
-	RedisUtil redisUtil;
-
 	/**
 	 * 生成令牌
 	 * @param username 用户名
@@ -54,45 +48,14 @@ public class JwtTokenUtil {
 	}
 
 	/**
-	 * 获取用户身份信息
-	 * @param request 请求
-	 * @return 登录用户
-	 */
-	public LoginUser getLoginUser(HttpServletRequest request) {
-		// 获取请求携带的令牌
-		String token = getToken(request);
-		if (StrUtil.isNotEmpty(token)) {
-			Claims claims = getClaimsFromToken(token);
-			String username = claims.getSubject();
-			// 解析对应的权限以及用户信息
-			return redisUtil.getCacheObject(Constants.USER_KEY + username);
-		}
-		return null;
-	}
-
-	/**
 	 * 判断令牌是否过期
-	 * @param request 请求
+	 * @param token 令牌
 	 * @return 过期返回true
 	 */
-	public Boolean isTokenExpired(HttpServletRequest request) {
-		String token = getToken(request);
+	public Boolean isTokenExpired(String token) {
 		Claims claims = getClaimsFromToken(token);
 		Date expiration = claims.getExpiration();
 		return expiration.before(new Date());
-	}
-
-	/**
-	 * 获取请求token
-	 * @param request 请求
-	 * @return token
-	 */
-	public String getToken(HttpServletRequest request) {
-		String token = request.getHeader(Constants.TOKEN_HEADER);
-		if (StrUtil.isNotEmpty(token) && token.startsWith(Constants.TOKEN_PREFIX)) {
-			token = token.replace(Constants.TOKEN_PREFIX, "");
-		}
-		return token;
 	}
 
 	/**
@@ -116,11 +79,10 @@ public class JwtTokenUtil {
 
 	/**
 	 * 从令牌中获取用户名
-	 * @param request
-	 * @return
+	 * @param token 令牌
+	 * @return 用户名
 	 */
-	public String getUsernameFromToken(HttpServletRequest request) {
-		String token = getToken(request);
+	public String getUsernameFromToken(String token) {
 		String username = null;
 		try {
 			Claims claims = getClaimsFromToken(token);

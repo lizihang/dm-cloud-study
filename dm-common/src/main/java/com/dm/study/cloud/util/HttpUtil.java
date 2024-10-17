@@ -1,6 +1,7 @@
 package com.dm.study.cloud.util;
 
 import com.alibaba.fastjson.JSON;
+import com.dm.study.cloud.constant.Constants;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -21,7 +22,7 @@ import java.io.IOException;
  * <p>类全名：com.dm.study.cloud.util.ServletUtil</p>
  * 查看帮助：<a href="" target="_blank"></a>
  */
-public class ServletUtil {
+public class HttpUtil {
 	/**
 	 * 渲染到客户端
 	 * @param response
@@ -54,5 +55,28 @@ public class ServletUtil {
 	public static ServletRequestAttributes getRequestAttributes() {
 		RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
 		return (ServletRequestAttributes) attributes;
+	}
+
+	/**
+	 * 获取请求头中的参数值
+	 * @param headName 请求头名称
+	 * @return 请求头值
+	 */
+	public static String getRequestHead(String headName) {
+		HttpServletRequest request = getRequest();
+		return request.getHeader(headName);
+	}
+
+	/**
+	 * 获取请求token
+	 * @param request 请求
+	 * @return
+	 */
+	public static String getToken(HttpServletRequest request) {
+		String token = request.getHeader(Constants.TOKEN_HEADER);
+		if (StrUtil.isNotEmpty(token) && token.startsWith(Constants.TOKEN_PREFIX)) {
+			token = token.replace(Constants.TOKEN_PREFIX, "");
+		}
+		return token;
 	}
 }

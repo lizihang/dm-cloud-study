@@ -1,6 +1,6 @@
 package com.dm.study.cloud.handler;
 
-import com.dm.study.cloud.util.ServletUtil;
+import com.dm.study.cloud.util.HttpUtil;
 import com.dm.study.cloud.vo.Result;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
@@ -30,6 +30,6 @@ public class UserAuthenticationEntryPointHandler implements AuthenticationEntryP
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         Result result = Result.error(HttpStatus.UNAUTHORIZED.value(), "用户未登录！");
-        ServletUtil.render(response, result);
+        HttpUtil.render(response, result);
     }
 }

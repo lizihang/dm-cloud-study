@@ -1,6 +1,9 @@
 package com.dm.study.cloud.controller;
 
 import com.alibaba.csp.sentinel.slots.block.BlockException;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dm.study.cloud.config.MyNacosProperties;
@@ -10,15 +13,31 @@ import com.dm.study.cloud.param.DmUserQueryParams;
 import com.dm.study.cloud.po.SysUser;
 import com.dm.study.cloud.po.TestGroupingBy;
 import com.dm.study.cloud.service.SysUserService;
+import com.dm.study.cloud.vo.MySearchResult;
 import com.dm.study.cloud.vo.Result;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.zhipu.oapi.ClientV4;
+import com.zhipu.oapi.Constants;
+import com.zhipu.oapi.service.v4.model.*;
+import com.zhipu.oapi.service.v4.tools.*;
+import io.reactivex.Flowable;
 import org.redisson.api.RedissonClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 /**
  * <p>标题：测试用controller</p>
@@ -36,6 +55,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/test")
 public class TestController {
+	private static final Logger logger = LoggerFactory.getLogger(TestController.class);
 	@Resource
 	SysUserService    userService;
 	@Resource
@@ -46,6 +66,131 @@ public class TestController {
 	MyNacosProperties myNacosProperties;
 	@Value("${server.port}")
 	int               port;
+
+	@PostMapping("/testZhiPu")
+	public Result testZhiPu(@RequestBody String content) {
+		ClientV4 client = new ClientV4 //
+				.Builder("ce14316ce3613150678422e6c2cbac63.MKxRHmtOeRAQAUXf") //
+				.networkConfig(300, 300, 300, 300, TimeUnit.SECONDS) //
+				.build();
+		List<ChatMessage> messages = new ArrayList<>();
+		ChatMessage chatMessage = new ChatMessage(ChatMessageRole.USER.value(), content);
+		messages.add(chatMessage);
+		String requestId = "test-" + System.currentTimeMillis();
+		ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest.builder() //
+				.model(Constants.ModelChatGLM4) //
+				.stream(Boolean.FALSE) //
+				.invokeMethod(Constants.invokeMethod) //
+				.messages(messages) //
+				.requestId(requestId) //
+				.build();
+		ModelApiResponse invokeModelApiResp = client.invokeModelApi(chatCompletionRequest);
+		System.out.println("model output:" + JSON.toJSONString(invokeModelApiResp));
+		System.out.println(invokeModelApiResp.getMsg());
+		return Result.success("查询成功！", invokeModelApiResp);
+	}
+
+	private static final ObjectMapper mapper = new ObjectMapper();
+
+	public static ObjectMapper defaultObjectMapper() {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+		mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+		return mapper;
+	}
+
+	@PostMapping("/testZhiPuStream")
+	public SseEmitter testZhiPuStream(@RequestBody String content) throws JsonProcessingException {
+		SseEmitter sseEmitter = new SseEmitter(1000 * 60 * 10L);
+		ClientV4 client = new ClientV4 //
+				.Builder("ce14316ce3613150678422e6c2cbac63.MKxRHmtOeRAQAUXf") //
+				.networkConfig(300, 300, 300, 300, TimeUnit.SECONDS) //
+				.build();
+		List<ChatMessage> messages = new ArrayList<>();
+		ChatMessage chatMessage = new ChatMessage(ChatMessageRole.USER.value(), content);
+		messages.add(chatMessage);
+		String requestId = "test-" + System.currentTimeMillis();
+		ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest.builder() //
+				.model(Constants.ModelChatGLM4) //
+				.stream(Boolean.TRUE) //
+				.messages(messages) //
+				.requestId(requestId) //
+				.build();
+		ModelApiResponse sseModelApiResp = client.invokeModelApi(chatCompletionRequest);
+		if (sseModelApiResp.isSuccess()) {
+			AtomicBoolean isFirst = new AtomicBoolean(true);
+			List<Choice> choices = new ArrayList<>();
+			ChatMessageAccumulator chatMessageAccumulator = mapStreamToAccumulator(sseModelApiResp.getFlowable()).doOnNext(accumulator -> {
+				if (isFirst.getAndSet(false)) {
+					System.out.print("Response: ");
+				}
+				if (accumulator.getDelta() != null && accumulator.getDelta().getTool_calls() != null) {
+					String jsonString = mapper.writeValueAsString(accumulator.getDelta().getTool_calls());
+					System.out.println("tool_calls: " + jsonString);
+				}
+				if (accumulator.getDelta() != null && accumulator.getDelta().getContent() != null) {
+					System.out.print(accumulator.getDelta().getContent());
+				}
+				sseEmitter.send(SseEmitter.event().name("delta").data(accumulator.getDelta()));
+				choices.add(accumulator.getChoice());
+				if (accumulator.getChoice().getFinishReason() != null) {
+					sseEmitter.complete();
+				}
+			}).doOnComplete(System.out::println).lastElement().blockingGet();
+			// ModelData data = new ModelData();
+			// data.setChoices(choices);
+			// data.setUsage(chatMessageAccumulator.getUsage());
+			// data.setId(chatMessageAccumulator.getId());
+			// data.setCreated(chatMessageAccumulator.getCreated());
+			// data.setRequestId(chatCompletionRequest.getRequestId());
+			// sseModelApiResp.setFlowable(null);// 打印前置空
+			// sseModelApiResp.setData(data);
+		}
+		// logger.info("model output: {}", mapper.writeValueAsString(sseModelApiResp));
+		return sseEmitter;
+	}
+
+	@PostMapping("/webSearchZhiPu")
+	public Result webSearchZhiPu(@RequestBody String content) throws JsonProcessingException {
+		ClientV4 client = new ClientV4 //
+				.Builder("ce14316ce3613150678422e6c2cbac63.MKxRHmtOeRAQAUXf") //
+				.networkConfig(300, 300, 300, 300, TimeUnit.SECONDS) //
+				.build();
+		List<SearchChatMessage> messages = new ArrayList<>();
+		SearchChatMessage chatMessage = new SearchChatMessage(ChatMessageRole.USER.value(), content);
+		messages.add(chatMessage);
+		String requestId = "test-" + System.currentTimeMillis();
+		WebSearchParamsRequest chatCompletionRequest = WebSearchParamsRequest.builder() //
+				.model("web-search-pro") //
+				.stream(Boolean.FALSE) //
+				.messages(messages) //
+				.requestId(requestId) //
+				.build();
+		WebSearchApiResponse webSearchApiResponse = client.invokeWebSearchPro(chatCompletionRequest);
+		List<WebSearchChoice> choices = webSearchApiResponse.getData().getChoices();
+		if (choices != null && choices.size() > 0) {
+			List<WebSearchMessageToolCall> toolCalls = choices.get(0).getMessage().getToolCalls();
+			for (WebSearchMessageToolCall toolCall : toolCalls) {
+				System.out.println(toolCall);
+				if ("search_result".equals(toolCall.getType())){
+					JSONObject jsonObject = JSON.parseObject(toolCall.toString());
+					JSONArray searchResult = jsonObject.getJSONArray("search_result");
+					List<MySearchResult> list = searchResult.toJavaList(MySearchResult.class);
+					System.out.println("here");
+				}
+
+			}
+		}
+		logger.info("model output: {}", mapper.writeValueAsString(webSearchApiResponse));
+		return Result.success("查询成功", webSearchApiResponse);
+	}
+
+	public static Flowable<ChatMessageAccumulator> mapStreamToAccumulator(Flowable<ModelData> flowable) {
+		return flowable.map(chunk -> {
+			return new ChatMessageAccumulator(chunk.getChoices().get(0).getDelta(), null, chunk.getChoices().get(0), chunk.getUsage(), chunk.getCreated(), chunk.getId());
+		});
+	}
 
 	@GetMapping("/testFeign/queryGoods/{id}")
 	public Result queryGoods(@PathVariable String id) {

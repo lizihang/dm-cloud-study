@@ -20,14 +20,22 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class MilvusConfig {
-	@Value("${milvus.host}")
-	private String  host; //milvus所在服务器地址
-	@Value("${milvus.port}")
-	private Integer port; //milvus端口
+	//milvus所在服务器地址
+	@Value("${milvus.uri}")
+	private String uri;
+	//milvus端口
+	@Value("${milvus.username}")
+	private String username;
+	//milvus端口
+	@Value("${milvus.password}")
+	private String password;
 
 	@Bean
 	public MilvusServiceClient milvusServiceClient() {
-		ConnectParam connectParam = ConnectParam.newBuilder().withHost(host).withPort(port).build();
+		ConnectParam connectParam = ConnectParam.newBuilder() //
+				.withUri(uri) //
+				.withAuthorization(username, password) //
+				.build();
 		return new MilvusServiceClient(connectParam);
 	}
 }

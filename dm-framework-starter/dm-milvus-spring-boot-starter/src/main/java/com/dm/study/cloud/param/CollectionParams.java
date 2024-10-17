@@ -17,10 +17,19 @@ import java.util.List;
  */
 public class CollectionParams implements Serializable {
 	private static final long                  serialVersionUID = 8419160289181327510L;
+	private              String                databaseName;
 	private              String                collectionName;
 	private              String                description;
 	private              Integer               shardsNum;
 	private              List<FieldTypeParams> filedTypeList;
+
+	public String getDatabaseName() {
+		return databaseName;
+	}
+
+	public void setDatabaseName(String databaseName) {
+		this.databaseName = databaseName;
+	}
 
 	public String getCollectionName() {
 		return collectionName;

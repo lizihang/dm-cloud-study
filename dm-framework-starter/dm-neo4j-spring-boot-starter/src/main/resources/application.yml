@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: neo4j
+  neo4j:
+    uri: bolt://192.168.23.102:27687
+    authentication:
+      username: neo4j
+      password: neo4j!@#
+  jpa:
+    show-sql: true
+
+server:
+  port: 19001

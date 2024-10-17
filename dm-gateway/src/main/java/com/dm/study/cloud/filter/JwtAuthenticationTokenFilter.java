@@ -1,22 +1,25 @@
 package com.dm.study.cloud.filter;
 
-import com.dm.study.cloud.feign.ToUserService;
+import com.dm.study.cloud.constant.Constants;
+import com.dm.study.cloud.util.JwtTokenUtil;
 import com.dm.study.cloud.util.RedisUtil;
+import com.dm.study.cloud.util.ServerHttpUtil;
 import com.dm.study.cloud.vo.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.net.URI;
+import java.util.concurrent.TimeUnit;
 /**
  * <p>标题：校验token</p>
  * <p>功能：自定义全局过滤器</p>
@@ -33,27 +36,31 @@ import java.util.concurrent.Future;
 @Component
 public class JwtAuthenticationTokenFilter implements GlobalFilter, Ordered {
 	private final Logger logger = LoggerFactory.getLogger(JwtAuthenticationTokenFilter.class);
-	// @Resource
-	// JwtTokenUtil jwtTokenUtil;
 	@Resource
-	RedisUtil     redisUtil;
+	JwtTokenUtil jwtTokenUtil;
 	@Resource
-	ToUserService toUserService;
-	//
-	ExecutorService executorService = Executors.newFixedThreadPool(1);
+	RedisUtil    redisUtil;
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-		// WebFlux异步调用，同步会报错
-		Future<Result> future = executorService.submit(() -> toUserService.testFeign());
-		Result result;
-		try {
-			result = future.get();
-			logger.info(result.toString());
-		} catch (InterruptedException | ExecutionException e) {
-			e.printStackTrace();
-		}
 		logger.info("校验token全局filter");
+		ServerHttpRequest request = exchange.getRequest();
+		ServerHttpResponse response = exchange.getResponse();
+		// 不校验token的url
+		URI uri = request.getURI();
+		if (uri.getPath().contains("/login")) {
+			return chain.filter(exchange);
+		}
+		String token = ServerHttpUtil.getToken(exchange);
+		String username = jwtTokenUtil.getUsernameFromToken(token);
+		if (token == null || username == null) {
+			return ServerHttpUtil.render(response, Result.error(HttpStatus.UNAUTHORIZED.value(), "token已过期，请重新登录！"));
+		}
+		if (redisUtil.exist(Constants.USER_KEY + username)) {
+			redisUtil.setExpireTime(Constants.USER_KEY + username, 30, TimeUnit.MINUTES);
+		} else {
+			return ServerHttpUtil.render(response, Result.error(HttpStatus.UNAUTHORIZED.value(), "token已过期，请重新登录！"));
+		}
 		return chain.filter(exchange);
 	}
 
@@ -61,34 +68,4 @@ public class JwtAuthenticationTokenFilter implements GlobalFilter, Ordered {
 	public int getOrder() {
 		return HIGHEST_PRECEDENCE;
 	}
-	//    @Override
-	//    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-	//        String url = request.getRequestURL().toString();
-	//        logger.info("请求地址url:" + url);
-	//        LoginUser loginUser = jwtTokenUtil.getLoginUser(request);
-	//        if (ObjectUtil.isNotEmpty(loginUser) && ObjectUtil.isEmpty(SecurityContextHolder.getContext().getAuthentication()))
-	//        {
-	//            // 如果token过期，清空redis中user缓存
-	//            if (jwtTokenUtil.isTokenExpired(request))
-	//            {
-	//                redisUtil.deleteObject(Constants.LOGIN_USER_KEY + loginUser.getUsername());
-	//                redisUtil.deleteObject(Constants.USER_KEY + loginUser.getUsername());
-	//            } else
-	//            {
-	//                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
-	//                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-	//                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-	//            }
-	//        }
-	//        String token = jwtTokenUtil.getToken(request);
-	//        if (StrUtil.isNotEmpty(token) && ObjectUtil.isEmpty(loginUser))
-	//        {
-	//            // 当redis缓存中loginUser删除时，重新登录会查询user，此时如果redis中user存在，返回的是没有password的，会报登录失败
-	//            // 临时解决：缓存中loginUser不存在时，user缓存也清空。
-	//            // TODO loginUser和user缓存只留一个？
-	//            String username = jwtTokenUtil.getUsernameFromToken(request);
-	//            redisUtil.deleteObject(Constants.USER_KEY + username);
-	//        }
-	//        filterChain.doFilter(request, response);
-	//    }
 }

@@ -6,12 +6,24 @@ spring:
           enabled: false
           lower-case-service-id: true
       routes:
+        # 框架服务
         - id: dm-security
           uri: lb://dm-security
           predicates:
             - Path=/dm-security/**
           filters:
             - StripPrefix=1
+        - id: dm-framework-penetration
+          uri: lb://dm-framework-penetration
+          predicates:
+            - Path=/dm-framework-penetration/**
+          filters:
+            - StripPrefix=1
+        - id: websocket
+          uri: lb:ws://dm-framework-websocket
+          predicates:
+            - Path=/websocket/**
+        # 业务服务
         - id: dm-user
           uri: lb://dm-user
           predicates:
@@ -19,10 +31,6 @@ spring:
           filters:
             - StripPrefix=1
             - RequestPath=test,path
-        - id: websocket
-          uri: lb:ws://dm-framework-websocket
-          predicates:
-            - Path=/websocket/**
         - id: dm-chat
           #uri: ws://127.0.0.1:12345
           uri: lb:ws://dm-chat

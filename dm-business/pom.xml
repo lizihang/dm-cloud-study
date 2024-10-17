@@ -18,6 +18,7 @@
         <module>dm-exam</module>
         <module>dm-mall</module>
         <module>dm-chat</module>
+        <module>dm-liteflow</module>
     </modules>
 </project>
 

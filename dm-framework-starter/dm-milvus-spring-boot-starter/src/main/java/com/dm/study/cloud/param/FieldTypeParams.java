@@ -22,6 +22,7 @@ public class FieldTypeParams implements Serializable {
 	private              Integer dataTypeValue;
 	private              Boolean autoID;
 	private              Integer dimension;
+	private              Integer maxLength;
 	// private final Map<String,String> typeParams = new HashMap<>();
 
 	public String getName() {
@@ -70,5 +71,13 @@ public class FieldTypeParams implements Serializable {
 
 	public void setDimension(Integer dimension) {
 		this.dimension = dimension;
+	}
+
+	public Integer getMaxLength() {
+		return maxLength;
+	}
+
+	public void setMaxLength(Integer maxLength) {
+		this.maxLength = maxLength;
 	}
 }

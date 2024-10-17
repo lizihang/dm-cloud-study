@@ -1,0 +1,8 @@
+server:
+  port: 22222
+spring:
+  application:
+    name: dm-chat
+
+liteflow:
+  rule-source: config/flow.el.xml

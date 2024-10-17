@@ -3,8 +3,7 @@ package com.dm.study.cloud.handler;
 import com.dm.study.cloud.constant.Constants;
 import com.dm.study.cloud.util.JwtTokenUtil;
 import com.dm.study.cloud.util.RedisUtil;
-import com.dm.study.cloud.util.ServletUtil;
-import com.dm.study.cloud.vo.LoginUser;
+import com.dm.study.cloud.util.HttpUtil;
 import com.dm.study.cloud.vo.Result;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
@@ -38,8 +37,9 @@ public class DmLogoutSuccessHandler implements LogoutSuccessHandler {
 	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
 		// TODO 登出成功 记录登出日志
 		// 1.登出成功，删除缓存
-		LoginUser loginUser = jwtTokenUtil.getLoginUser(request);
-		redisUtil.deleteCacheObject(Constants.USER_KEY + loginUser.getUsername());
-		ServletUtil.render(response, Result.success("退出登录成功！"));
+		String token = HttpUtil.getToken(request);
+		String username = jwtTokenUtil.getUsernameFromToken(token);
+		redisUtil.deleteCacheObject(Constants.USER_KEY + username);
+		HttpUtil.render(response, Result.success("退出登录成功！"));
 	}
 }

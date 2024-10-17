@@ -1,6 +1,6 @@
 package com.dm.study.cloud.handler;
 
-import com.dm.study.cloud.util.ServletUtil;
+import com.dm.study.cloud.util.HttpUtil;
 import com.dm.study.cloud.vo.Result;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
@@ -30,6 +30,6 @@ public class UserAuthAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         Result result = Result.error(HttpStatus.FORBIDDEN.value(), "用户没有权限！");
-        ServletUtil.render(response, result);
+        HttpUtil.render(response, result);
     }
 }

@@ -1,0 +1,7 @@
+server:
+  port: 20201
+spring:
+  application:
+    name: dm-chat
+netty:
+  port: 12345

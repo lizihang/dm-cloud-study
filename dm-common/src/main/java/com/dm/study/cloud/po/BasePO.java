@@ -1,3 +1,4 @@
+
 package com.dm.study.cloud.po;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
@@ -24,7 +25,7 @@ import java.util.Date;
 public class BasePO implements Serializable {
 	private static final long   serialVersionUID = -2928960545586924970L;
 	/* id */
-	@TableId(type = IdType.AUTO)
+	@TableId(type = IdType.INPUT)
 	private              String id;
 	/* 创建人 */
 	@TableField(fill = FieldFill.INSERT)

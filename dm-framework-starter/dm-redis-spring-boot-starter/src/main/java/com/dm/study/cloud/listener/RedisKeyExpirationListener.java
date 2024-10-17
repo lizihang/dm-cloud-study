@@ -1,5 +1,7 @@
 package com.dm.study.cloud.listener;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.data.redis.listener.KeyExpirationEventMessageListener;
@@ -20,6 +22,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class RedisKeyExpirationListener extends KeyExpirationEventMessageListener {
+	private static final Logger logger = LoggerFactory.getLogger(RedisKeyExpirationListener.class);
+
 	/**
 	 * Creates new {@link MessageListener} for {@code __keyevent@*__:expired} messages.
 	 * @param listenerContainer must not be {@literal null}.
@@ -32,6 +36,6 @@ public class RedisKeyExpirationListener extends KeyExpirationEventMessageListene
 	protected void doHandleMessage(Message message) {
 		// 过期key
 		String expiredKey = message.toString();
-		System.out.println(expiredKey + "过期了");
+		logger.info("key<{}>过期了", expiredKey);
 	}
 }

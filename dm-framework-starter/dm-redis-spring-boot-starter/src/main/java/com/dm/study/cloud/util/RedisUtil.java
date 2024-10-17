@@ -5,6 +5,7 @@ import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 /**
  * <p>标题：</p>
  * <p>功能：</p>
@@ -35,6 +36,30 @@ public class RedisUtil {
 	}
 
 	/**
+	 * 缓存基本的对象，Integer、String、实体类等
+	 * @param key 键
+	 * @param value 值
+	 * @param timeToLive 超时时间，默认毫秒
+	 * @param <T> 泛型
+	 */
+	public <T> void setCacheObject(final String key, final T value, long timeToLive) {
+		setCacheObject(key, value, timeToLive, TimeUnit.MILLISECONDS);
+	}
+
+	/**
+	 * 缓存基本的对象，Integer、String、实体类等
+	 * @param key 键
+	 * @param value 值
+	 * @param timeToLive 超时时间
+	 * @param timeUnit 时间单位
+	 * @param <T> 泛型
+	 */
+	public <T> void setCacheObject(final String key, final T value, long timeToLive, TimeUnit timeUnit) {
+		RBucket<T> bucket = client.getBucket(key);
+		bucket.set(value, timeToLive, timeUnit);
+	}
+
+	/**
 	 * 获得缓存的基本对象。
 	 * @param key 键
 	 * @param <T> 泛型
@@ -55,4 +80,36 @@ public class RedisUtil {
 		RBucket<T> bucket = client.getBucket(key);
 		return bucket.delete();
 	}
+
+	/**
+	 * 判断是否存在
+	 * @param key 键
+	 * @return true:存在
+	 */
+	public boolean exist(final String key) {
+		RBucket<Object> bucket = client.getBucket(key);
+		return bucket.isExists();
+	}
+
+	/**
+	 * 设置过期时间
+	 * @param key 键
+	 * @param timeToLive 过期时间
+	 * @param timeUnit 时间单位
+	 */
+	public void setExpireTime(final String key, final long timeToLive, final TimeUnit timeUnit) {
+		RBucket<Object> bucket = client.getBucket(key);
+		bucket.expire(timeToLive, timeUnit);
+	}
+
+	/**
+	 * 获取过期时间
+	 * @param key 键
+	 * @return 过期时间，单位毫秒
+	 */
+	public long getExpireTime(final String key) {
+		RBucket<Object> bucket = client.getBucket(key);
+		return bucket.remainTimeToLive();
+	}
+
 }
