@@ -3,3 +3,13 @@
 app:
   db:
     name: dm
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    root: INFO
