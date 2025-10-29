@@ -29,6 +29,10 @@
                     <artifactId>dm-mybatis-spring-boot-starter</artifactId>
                     <groupId>com.dm.study.cloud</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>dm-milvus-spring-boot-starter</artifactId>
+                    <groupId>com.dm.study.cloud</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
 
